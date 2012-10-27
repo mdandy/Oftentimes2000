@@ -1,7 +1,17 @@
 # MaVeN
 
-### Team Members* Michael Dandy - mdandy3@gatech.edu* Jonathan Edwards - jedwards36@gatech.edu* Kevin Johnstone - kjohnstone6@gatech.edu* Josh Zeder - jzeder3@gatech.edu
-### Project Description
+## Table of Contents
+* [Team Members](#team)
+* [Project Description](#desc)
+* [User Archetype and Use Cases](#archetype)
+* [Shortcomings of the Current Solution](#shortcomings)
+* [Technologies](#technologies)
+* [References](#references)
+* [Compilation Notes](#notes)
+
+## <a id="team"></a> Team Members 
+* Michael Dandy - mdandy3@gatech.edu* Jonathan Edwards - jedwards36@gatech.edu* Kevin Johnstone - kjohnstone6@gatech.edu* Josh Zeder - jzeder3@gatech.edu
+## <a id="desc"></a> Project Description
 Oftentimes it’s difficult for local businesses to get the word out about 
 their business if they are constantly overshadowed by larger, more 
 international companies. Since many of these local businesses cannot 
@@ -24,7 +34,8 @@ that they want to subscribe. For example, if they want to keep up with
 any local deals, they should subscribe to local deals category. Therefore, 
 the users will not be bothered by any events or advertisements that they 
 do not like. Moreover, you can view the map which is integrated in our 
-application in order to locate all the events that you have subscribed to.### User Archetype and Use CasesOur users archetypes are those who are interested in finding local deal 
+application in order to locate all the events that you have subscribed to.## <a id="archetype"></a> User Archetype and Use Cases 
+Our users archetypes are those who are interested in finding local deal 
 and events that may be taking place. Particularly, those people that wish 
 there is an all-in-one application that lists all local deals, news and 
 events. Moreover, local businesses, schools, law enforcement, and news 
@@ -40,7 +51,8 @@ follow the same steps as above.
 occurring in the near future, they can open the application and see a list 
 of available events and deals listed in chronological order. When they choose 
 an event/advertisement they are taken to a screen where more detailed 
-information is presented along with an option to view in a map.### Shortcomings of the Current SolutionThere is no an all-in-one local announcement and/or advertising service. 
+information is presented along with an option to view in a map.## <a id="shortcomings"></a> Shortcomings of the Current Solution 
+There is no an all-in-one local announcement and/or advertising service. 
 We can pick Groupon as an example. It surely offers local deals, but it does 
 not list any local news or events. Furthermore, it doesn’t have push 
 notification system integrated. Users have to open the app in order to find 
@@ -52,5 +64,9 @@ Also, Craigslist’s proximity is limited to high population city. Hence, if
 you have a business in small town, you will not be able to advertise your 
 business in Craigslist. Another limitation is that if you want to broadcast 
 your campus event, you cannot target the audience only to your campus 
-residents.### Technologies* Android OS* GPS service* Google Maps* GCM (Google Cloud Messaging)* PHP and MySQL* HTTPRequest (Java Socket)### References
+residents.## <a id="technologies"></a> Technologies* Android OS* GPS service* Google Maps* GCM (Google Cloud Messaging)* PHP and MySQL* HTTPRequest (Java Socket)## <a id="references"></a> References 
 * Android OS - https://developer.android.com/reference/classes.html* Google Maps API - https://developers.google.com/maps/documentation/android/* GCM - https://developer.android.com/guide/google/gcm/index.html
+
+## <a id="notes"></a> Compilation Notes 
+* This application requires RibbonMenu library - 
+  https://github.com/darvds/RibbonMenu
