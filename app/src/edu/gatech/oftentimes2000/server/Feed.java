@@ -23,7 +23,7 @@ public class Feed
 		// Parse the response
 		if (response != null)
 		{
-			JSONArray jsonFeeds = HTTPUtil.getResponseAsJSON(response);
+			JSONArray jsonCategories = HTTPUtil.getResponseAsJSON(response);
 		}
 		return categories;
 	}
