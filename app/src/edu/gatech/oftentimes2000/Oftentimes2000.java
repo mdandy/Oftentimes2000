@@ -7,6 +7,9 @@ import android.view.MenuItem;
 import com.darvds.ribbonmenu.RibbonMenuView;
 import com.darvds.ribbonmenu.iRibbonMenuCallback;
 
+import edu.gatech.oftentimes2000.dialog.AuthenticationDialog;
+import edu.gatech.oftentimes2000.server.Authenticator;
+
 public class Oftentimes2000 extends Activity implements iRibbonMenuCallback 
 {
 	/** Called when the activity is first created. */
@@ -45,17 +48,15 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 	{
 		switch (itemId)
 		{
-		case 0:
-			// Featured
+		case R.id.ribbon_menu_featured:
 			break;
-		case 1:
-			// Favorites
+		case R.id.ribbon_menu_favorites:
+			if (!Authenticator.isAuthenticated(this))
+				AuthenticationDialog.show(this);
 			break;
-		case 2:
-			// Categories
+		case R.id.ribbon_menu_categories:
 			break;
-		case 3:
-			// Settings
+		case R.id.ribbon_menu_settings:
 			break;
 		}
 	}

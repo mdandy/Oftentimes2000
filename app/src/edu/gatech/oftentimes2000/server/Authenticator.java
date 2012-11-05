@@ -44,6 +44,9 @@ public class Authenticator
 		params.add(new BasicNameValuePair("password", password));
 		HttpResponse response = HTTPUtil.doPost(postURL, params);
 
+		if (response == null)
+			return false;
+		
 		if (HTTPUtil.getResponseCode(response) == 200)
 		{
 			// Read the response body
