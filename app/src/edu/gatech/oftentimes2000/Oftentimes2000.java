@@ -43,6 +43,20 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 	@Override
 	public void RibbonMenuItemClick(int itemId) 
 	{
-
+		switch (itemId)
+		{
+		case 0:
+			// Featured
+			break;
+		case 1:
+			// Favorites
+			break;
+		case 2:
+			// Categories
+			break;
+		case 3:
+			// Settings
+			break;
+		}
 	}
 }
