@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<edu.gatech.oftentimes2000.map.MyMapView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mapview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:apiKey="0PHHeQ4fLs1geJuYrfLaHu0hS1Q2W5UYsbo3KOw"
+/>
