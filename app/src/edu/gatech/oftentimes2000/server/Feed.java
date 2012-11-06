@@ -25,6 +25,14 @@ public class Feed
 		{
 			JSONArray jsonCategories = HTTPUtil.getResponseAsJSON(response);
 		}
+		else
+		{
+			// DEBUG only
+			categories.add("Item 1");
+			categories.add("Item 2");
+			categories.add("Item 3");
+			categories.add("Item 4");
+		}
 		return categories;
 	}
 
