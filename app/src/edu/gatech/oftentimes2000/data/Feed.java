@@ -1,10 +1,12 @@
-package edu.gatech.oftentimes2000.server;
+package edu.gatech.oftentimes2000.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
+
+import edu.gatech.oftentimes2000.server.HTTPUtil;
 
 public class Feed 
 {
