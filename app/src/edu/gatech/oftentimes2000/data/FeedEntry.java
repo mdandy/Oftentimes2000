@@ -36,6 +36,4 @@ public class FeedEntry
 	 * The address information associated with this entry.
 	 */
 	public Address address;
-	
-	
 }

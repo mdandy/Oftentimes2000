@@ -58,7 +58,8 @@ public class Address
 		output += this.street + "\n";
 		output += this.city + ", " + this.state + " " + this.zipcode + "\n";
 		output += this.phoneNumber + "\n";
-		output += this.url;
+		output += this.url + "\n";
+		output += this.geopoint.toString();
 		return output;
 	}
 }
