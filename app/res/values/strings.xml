@@ -11,5 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="login">Login</string>
+    <string name="menu_map">View Map</string>
 
 </resources>

@@ -56,6 +56,18 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 			break;
 		case R.id.ribbon_menu_categories:
 			break;
+		case R.id.ribbon_menu_map:
+			
+			/*
+			 * TODO: Kevin, tie your map here
+			Intent intent = new Intent(this, MainActivity.class);			// new Intent (caller.class, callee.class)
+			intent.putExtra("Value1", "This value one for ActivityTwo ");	// any argument to be passed (optional)
+			intent.putExtra("Value2", "This value two ActivityTwo"); 		// any argument to be passed (optional)
+	        startActivity(intent);											// this actually switch the Activity
+	        
+	        http://www.vogella.com/articles/AndroidIntent/article.html
+	        */
+			break;
 		case R.id.ribbon_menu_settings:
 			break;
 		}
