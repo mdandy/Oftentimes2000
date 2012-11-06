@@ -1,6 +1,7 @@
 package edu.gatech.oftentimes2000;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -8,6 +9,7 @@ import com.darvds.ribbonmenu.RibbonMenuView;
 import com.darvds.ribbonmenu.iRibbonMenuCallback;
 
 import edu.gatech.oftentimes2000.dialog.AuthenticationDialog;
+import edu.gatech.oftentimes2000.map.MainActivity;
 import edu.gatech.oftentimes2000.server.Authenticator;
 
 public class Oftentimes2000 extends Activity implements iRibbonMenuCallback 
@@ -58,15 +60,15 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 			break;
 		case R.id.ribbon_menu_map:
 			
-			/*
-			 * TODO: Kevin, tie your map here
+			
+			 // TODO: Kevin, tie your map here
 			Intent intent = new Intent(this, MainActivity.class);			// new Intent (caller.class, callee.class)
-			intent.putExtra("Value1", "This value one for ActivityTwo ");	// any argument to be passed (optional)
-			intent.putExtra("Value2", "This value two ActivityTwo"); 		// any argument to be passed (optional)
+			//intent.putExtra("Value1", "This value one for ActivityTwo ");	// any argument to be passed (optional)
+			//intent.putExtra("Value2", "This value two ActivityTwo"); 		// any argument to be passed (optional)
 	        startActivity(intent);											// this actually switch the Activity
 	        
-	        http://www.vogella.com/articles/AndroidIntent/article.html
-	        */
+	        // http://www.vogella.com/articles/AndroidIntent/article.html
+	        
 			break;
 		case R.id.ribbon_menu_settings:
 			break;
