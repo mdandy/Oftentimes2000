@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 import edu.gatech.oftentimes2000.server.HTTPUtil;
 
-public class Feed 
+public class FeedList 
 {
 	/**
 	 * Get list of categories from the Server.
