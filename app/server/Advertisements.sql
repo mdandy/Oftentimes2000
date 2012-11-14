@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 12, 2012 at 09:31 AM
+-- Generation Time: Nov 14, 2012 at 10:16 AM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -28,9 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `Advertisements` (
   `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
+  `date` date NOT NULL,
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
