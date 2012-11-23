@@ -52,7 +52,7 @@ class DAL
 	{
 		try
 		{
-			$sql = "SELECT Username FROM oUsers WHERE username=:username AND password=:password";
+			$sql = "SELECT Username FROM oUsers WHERE username=:username AND password=SHA2(:password, 256)";
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
@@ -67,17 +67,17 @@ class DAL
 		return NULL;
 	}
 	
-	public static function register_user($username, $password) 
+	public static function update_user_account($username, $password) 
 	{
 		try 
 		{
 			$sql = "INSERT INTO oUsers (username, password) VALUES (:username, :password)";
-			$sql .= " ON DUPLICATE KEY UPDATE password=:uPassword";
+			$sql .= " ON DUPLICATE KEY UPDATE password=SHA2(:u_password, 256)";
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
 			$query->bindParam(":password", $password, PDO::PARAM_STR, 64);
-			$query->bindParam(":uPassword", $password, PDO::PARAM_STR, 64);
+			$query->bindParam(":u_password", $password, PDO::PARAM_STR, 64);
 			return $query->execute();
 		}
 		catch(PDOException $e) 
@@ -87,8 +87,8 @@ class DAL
 		return false;
 	}
 	
-	public static function update_user_account($username, $name, $street_address, $city, 
-											   $state, $zipcode, $website, $email, $about)
+	public static function update_user_profile($username, $name, $street_address, $city, 
+											   $state, $zipcode, $website="", $email, $about)
 	{
 		try 
 		{
@@ -120,6 +120,25 @@ class DAL
 			echo ("Error: " . $e->getMessage());
 		}
 		return false;
+	}
+	
+	public static function get_user_profile($username)
+	{
+		try 
+		{
+			$sql = "SELECT username, name, street_address, city, state, zipcode,";
+			$sql .= " website, email, about";
+			$sql .= " FROM oUsers WHERE username=:username";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
 	}
 	
 	/**
