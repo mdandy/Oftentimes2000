@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 23, 2012 at 09:18 AM
+-- Generation Time: Nov 23, 2012 at 10:46 AM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -23,22 +23,32 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Advertisements`
+-- Table structure for table `oAdvertisements`
 --
 
-CREATE TABLE IF NOT EXISTS `Advertisements` (
-  `username` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `description` varchar(500) NOT NULL,
+CREATE TABLE IF NOT EXISTS `oAdvertisements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL,
+  `title` varchar(64) NOT NULL,
+  `type` int(11) NOT NULL,
+  `highlights` varchar(140) NOT NULL,
+  `fine_print` varchar(140) NOT NULL,
+  `street_address` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `state` varchar(64) NOT NULL,
+  `zipcode` varchar(64) NOT NULL,
+  `radius` int(11) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
-  `date` date NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `category` varchar(300) NOT NULL,
+  `regular_price` int(11) NOT NULL,
+  `promotional_price` int(11) NOT NULL,
+  `from` datetime NOT NULL,
+  `to` datetime NOT NULL,
+  `url` varchar(64) NOT NULL,
+  `category` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`,`username`),
   KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -47,15 +57,15 @@ CREATE TABLE IF NOT EXISTS `Advertisements` (
 --
 
 CREATE TABLE IF NOT EXISTS `oUsers` (
-  `username` varchar(100) NOT NULL,
-  `email` varchar(300) NOT NULL,
-  `password` varchar(100) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `street_address` varchar(200) NOT NULL,
-  `state` varchar(100) NOT NULL,
-  `zip_code` int(11) NOT NULL,
-  `website` varchar(200) NOT NULL,
-  `about` varchar(500) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `street_address` varchar(64) NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `state` varchar(64) NOT NULL,
+  `zipcode` varchar(64) NOT NULL,
+  `website` varchar(64) NOT NULL,
+  `email` varchar(64) NOT NULL,
+  `about` varchar(4096) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -64,10 +74,10 @@ CREATE TABLE IF NOT EXISTS `oUsers` (
 --
 
 --
--- Constraints for table `Advertisements`
+-- Constraints for table `oAdvertisements`
 --
-ALTER TABLE `Advertisements`
-  ADD CONSTRAINT `Advertisements_ibfk_2` FOREIGN KEY (`username`) REFERENCES `oUsers` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `oAdvertisements`
+  ADD CONSTRAINT `oAdvertisements_ibfk_1` FOREIGN KEY (`username`) REFERENCES `oUsers` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
