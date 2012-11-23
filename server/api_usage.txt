@@ -6,7 +6,7 @@ return: {"res":"TRUE"} on success or {"res":"FALSE"} otherwise
 Login
 -----
 curl -i -X POST -d "username=user" -d "password=pass" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/login
-return: {"res":"TRUE","Username":"user"} on success or {"res":"FALSE"} otherwise
+return: {"res":"TRUE","data":{"Username":"mdandy"}} on success or {"res":"FALSE"} otherwise
 
 
 Create/ Update User Profile
@@ -21,8 +21,8 @@ Get User Profile
 ----------------
 curl -i -X GET http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/user/some_username
 return: 
-{"res":"TRUE" "username":"some_username","name":"Name","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","website":"domain.com","email":"email@domain.com","about":"about"} on true or
-{"res":"FALSE"} otherwise
+success : {"res":"TRUE","data":{"username":"some_username","name":"Name","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","website":"domain.com","email":"email@domain.com","about":"about"}}
+otherwise: {"res":"FALSE"}
 
 Create/ Update Announcement
 ---------------------------
@@ -60,14 +60,14 @@ Get Announcement
 * Get Announcement by User
 curl -i -X GET http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/announcement/some_username
 return: 
-{"res":"TRUE","0":{"id":"1","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}} on success
-or {"res":"FALSE"} otherwise
+success : {"res":"TRUE","data":[{"id":"6","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}]}
+otherwise : {"res":"FALSE"}
 
 * Get Announcement by Type
 curl -i -X GET http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/announcement/some_username?type=advertisement
 return: 
-{"res":"TRUE","0":{"id":"1","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}} on success
-or {"res":"FALSE"} otherwise
+success : {"res":"TRUE","data":[{"id":"6","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}]}
+otherwise : {"res":"FALSE"}
 
 Delete Announcement
 -------------------

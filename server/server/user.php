@@ -9,7 +9,7 @@ function login($username, $password)
 	DAL::disconnect();
 	
 	if ($user != NULL)
-		return json_encode(array_merge (array ("res" => "TRUE"), $user[0]));
+		return json_encode(array ("res" => "TRUE", "data" => $user[0]));
 	return json_encode(array ("res" => "FALSE"));
 }
 
@@ -47,7 +47,7 @@ function get_user_profile($username)
 	DAL::disconnect();
 	
 	if ($user != NULL)
-		return json_encode(array_merge (array ("res" => "TRUE"), $user[0]));
+		return json_encode(array ("res" => "TRUE", "data" => $user[0]));
 	return json_encode(array ("res" => "FALSE"));
 }
 

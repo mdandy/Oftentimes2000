@@ -112,7 +112,7 @@ function get_announcement($username)
 	DAL::disconnect();
 	
 	if ($annoucements != NULL)
-		return json_encode(array_merge (array ("res" => "TRUE"), $annoucements));
+		return json_encode(array ("res" => "TRUE", "data" => $annoucements));
 	return json_encode(array ("res" => "FALSE"));
 }
 
@@ -124,7 +124,7 @@ function get_announcement_by_type($username, $type)
 	DAL::disconnect();
 	
 	if ($annoucements != NULL)
-		return json_encode(array_merge (array ("res" => "TRUE"), $annoucements));
+		return json_encode(array ("res" => "TRUE", "data" => $annoucements));
 	return json_encode(array ("res" => "FALSE"));
 }
 
