@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding = "utf-8" ?>
+<widget title="CRC Court Reservation" security="protected">
+    <!-- DO NOT CHANGE THE ORDER!!! -->
+	<library name="jquery" />
+    <library name="gtmob" />
+	<javascript file="scripts/ui.js"/>
+	<javascript file="scripts/facebook.js"/>
+	<javascript file="scripts/login.js"/>
+	<javascript file="scripts/dateFunctions.js"/>
+	<javascript file="scripts/date.js"/>
+	<javascript file="scripts/courtChange.js"/>
+	<css file="css/style.css" />
+	<css file="css/jquery.mobile.simpledialog.min.css" />
+	
+    <html file="index.html"/>
+	<library name="jquery.mobile" />
+	<javascript file="scripts/jquery.mobile.simpledialog2.min.js"/>
+	 
+</widget>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<api>
+	<description>
+		<![CDATA[This is an API to interact with GT CRC Reservation system]]>
+	</description>
+	
+	<command id='reservation' security='protected'>
+		<description><![CDATA[This API lets you to reserve a court and retrieve reservation information]]></description>
+		
+		<index>
+			<description><![CDATA[
+				List of all court reservations.
+			]]></description>
+			<action file='server/reservation.php'><![CDATA[
+				date_default_timezone_set('UTC');
+				$now = date("Y-m-d H:00:00");	// YYYY-MM-DD HH:MM:SS UTC
+				echo get_all_reservations(-1, $now);
+			]]></action>
+		</index>
+        
+		<get>
+			<description><![CDATA[
+				Retrieve court reservations.
+			]]></description>
+			<action file='server/reservation.php'><![CDATA[
+				$arg = $_REST['reservation'];
+				if ($arg == 'active')
+					echo get_reservations_by_active_user();
+				else
+				{
+					if (is_numeric($arg))
+					{
+						$court_id = intval($arg);
+						if (isset($_GET['interval']))
+						{
+							$interval = intval($_GET['interval']);
+							echo get_reservations_by_time($court_id, $_GET['start_time'], $interval);
+						}
+						else
+							echo get_reservations_by_time($court_id, $_GET['start_time']);
+					}
+					else
+						echo get_reservations_by_user_id($arg);
+				}
+			]]></action>
+		</get>
+		
+		<post>
+			<description><![CDATA[
+				Create a reservation for CRC court. The interval of reservation is one hour and
+				the user can only reserve up to 48 hours in advance.
+			]]></description>
+			<action file='server/reservation.php'><![CDATA[
+				$court_number = intval($_POST['court_number']);
+				echo create_reservation($court_number, $_POST['start_time']);
+			]]></action>
+		</post>
+		
+		<!-- Unsupported
+		<put>
+			<description><![CDATA[
+				This is how you can update a simple item
+			]]></description>
+			<action file='server/reservation.php'><![CDATA[
+				echo '501 Not Supported';
+			]]></action>
+		</put>
+		-->
+
+		<delete>
+			<description><![CDATA[
+				Cancel reservations.
+			]]></description>
+			<action file='server/reservation.php'><![CDATA[
+				if (isset($_GET['reservation_id']))
+				{
+					echo $_GET['reservation_id'];
+					echo cancel_reservation_by_id($_GET['reservation_id']);
+				}
+				else
+				{
+					$court_number = intval($_REST['reservation']);
+					$interval = intval($_GET['interval']);
+					$comment = $_GET['comment'];
+					echo cancel_reservations_by_time($court_number, $_GET['start_time'], $interval, $comment);
+				}
+			]]></action>
+		</delete>
+	</command>
+	
+	
+	<command id='user' security='protected'>
+		<description><![CDATA[This API lets to get information about current active user]]></description>
+		
+		<index>
+			<description><![CDATA[
+				Retrieve active user.
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				echo get_active_user();
+			]]></action>
+		</index>
+		
+		<get>
+			<description><![CDATA[
+				Retrieve privelege level of a user.
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				$user_id = $_REST['user'];
+				if ($user_id == 'active')
+					$user_id = get_active_user();
+				echo json_encode(is_admin($user_id));
+			]]></action>
+		</get>
+	</command>
+</api>
