@@ -12,11 +12,11 @@ function upsert_advertisement($username, $title, $highlights, $fine_print="",
 	$longitude = $geopoint["longitude"];
 	$type = 1;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
-							   $regular_price=-1, $promotional_price=-1, 
-							   $from, $to, $url="", $category);
+							   $regular_price, $promotional_price, 
+							   $from, $to, $url, $category);
 }
 
 function upsert_psa($username, $title, $highlights, 
@@ -28,11 +28,11 @@ function upsert_psa($username, $title, $highlights,
 	$longitude = $geopoint["longitude"];
 	$type = 2;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
-							   $regular_price=-1, $promotional_price=-1, 
-							   $from, $to, $url="", $category);
+							   $regular_price, $promotional_price, 
+							   $from, $to, $url, $category);
 }
 
 function upsert_event($username, $title, $highlights,
@@ -44,11 +44,11 @@ function upsert_event($username, $title, $highlights,
 	$longitude = $geopoint["longitude"];
 	$type = 3;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
-							   $regular_price=-1, $promotional_price=-1, 
-							   $from, $to, $url="", $category);
+							   $regular_price, $promotional_price, 
+							   $from, $to, $url, $category);
 }
 
 function get_type($type)
@@ -80,11 +80,11 @@ function upsert_announcement($username, $title, $type, $highlights, $fine_print=
 							 $from, $to, $url="", $category)
 {
 	DAL::connect();
-	$sucess = DAL::upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+	$success = DAL::upsert_announcement($username, $title, $type, $highlights, $fine_print, 
 							 		   $street_address, $city, $state, $zipcode, $radius,
 							 		   $latitude, $longitude,
-							 		   $regular_price=-1, $promotional_price=-1, 
-							 		   $from, $to, $url="", $category);
+							 		   $regular_price, $promotional_price, 
+							 		   $from, $to, $url, $category);
 	DAL::disconnect();
 	
 	$res = array ("res" => "FALSE");
@@ -111,7 +111,9 @@ function get_announcement($username)
 	$annoucements = DAL::get_announcement($username);
 	DAL::disconnect();
 	
-	return json_encode($annoucements);
+	if ($annoucements != NULL)
+		return json_encode(array_merge (array ("res" => "TRUE"), $annoucements));
+	return json_encode(array ("res" => "FALSE"));
 }
 
 function get_announcement_by_type($username, $type)
@@ -121,7 +123,9 @@ function get_announcement_by_type($username, $type)
 	$annoucements = DAL::get_announcement_by_type($username, $type);
 	DAL::disconnect();
 	
-	return json_encode($annoucements);
+	if ($annoucements != NULL)
+		return json_encode(array_merge (array ("res" => "TRUE"), $annoucements));
+	return json_encode(array ("res" => "FALSE"));
 }
 
 ?>

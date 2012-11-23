@@ -8,14 +8,15 @@ function login($username, $password)
 	$user = DAL::login($username, $password);
 	DAL::disconnect();
 	
-	$res = array ("res" => $user);
-	return json_encode($res);
+	if ($user != NULL)
+		return json_encode(array_merge (array ("res" => "TRUE"), $user[0]));
+	return json_encode(array ("res" => "FALSE"));
 }
 
 function update_user_account($username, $password)
 {
 	DAL::connect();
-	$success = DAL::register_user($username, $password);
+	$success = DAL::update_user_account($username, $password);
 	DAL::disconnect();
 	
 	$res = array ("res" => "FALSE");
@@ -45,7 +46,9 @@ function get_user_profile($username)
 	$user = DAL::get_user_profile($username);
 	DAL::disconnect();
 	
-	return json_encode($user);
+	if ($user != NULL)
+		return json_encode(array_merge (array ("res" => "TRUE"), $user[0]));
+	return json_encode(array ("res" => "FALSE"));
 }
 
 ?>

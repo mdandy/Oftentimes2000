@@ -27,14 +27,14 @@
 				Create / update user account information
 			]]></description>
 			<action file='server/user.php'><![CDATA[
-				$q = $_POST['q'];
-				if (strcmp($type, "account") == 0)
+				$q = $_REST['user'];
+				if (strcmp($q, "account") == 0)
 				{
 					$username = $_POST['username'];
 					$password = $_POST['password'];
 					echo update_user_account($username, $password);
 				}
-				else if (strcmp($type, "profile") == 0)
+				else if (strcmp($q, "profile") == 0)
 				{
 					$username = $_POST['username'];
 					$name = $_POST['name'];
@@ -46,14 +46,14 @@
 					$email = $_POST['email'];
 					$about = $_POST['about'];
 					echo update_user_profile($username, $name, $street_address, $city, 
-							 				 $state, $zipcode, $website="", $email, $about);
+							 				 $state, $zipcode, $website, $email, $about);
 				}
 			]]></action>
 		</post>
 		
 		<get>
 			<description><![CDATA[
-				Retrieve user account information.
+				Retrieve user account information
 			]]></description>
 			<action file='server/user.php'><![CDATA[
 				$username = $_REST['user'];
@@ -70,7 +70,7 @@
 				Create / update announcement
 			]]></description>
 			<action file='server/announcement.php'><![CDATA[
-				$type = $_POST['type'];
+				$type = $_REST['announcement'];
 				$username = $_POST['username'];
 				$title = $_POST['title'];
 				$highlights = $_POST['highlights'];
@@ -90,29 +90,29 @@
 					$regular_price = $_POST['regular_price'];
 					$promotional_price = $_POST['promotional_price'];
 					
-					echo upsert_advertisement($username, $title, $highlights, $fine_print="", 
+					echo upsert_advertisement($username, $title, $highlights, $fine_print, 
 							  				  $street_address, $city, $state, $zipcode, $radius,
-							  				  $regular_price=-1, $promotional_price=-1, 
-							  				  $from, $to, $url="", $category);
+							  				  $regular_price, $promotional_price, 
+							  				  $from, $to, $url, $category);
 				}
 				else if (strcmp($type, "psa") == 0)
 				{
 					echo upsert_psa($username, $title, $highlights, 
 									$street_address, $city, $state, $zipcode, $radius,
-									$from, $to, $url="", $category);
+									$from, $to, $url, $category);
 				}
 				else if (strcmp($type, "event") == 0)
 				{
 					echo upsert_event($username, $title, $highlights,
 					  				  $street_address, $city, $state, $zipcode, $radius,
-					  				  $from, $to, $url="", $category);
+					  				  $from, $to, $url, $category);
 				}
 			]]></action>
 		</post>
 		
 		<get>
 			<description><![CDATA[
-				Get announcement.
+				Get announcement
 			]]></description>
 			<action file='server/announcement.php'><![CDATA[
 				$username = $_REST['announcement'];

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 23, 2012 at 10:46 AM
+-- Generation Time: Nov 23, 2012 at 02:03 PM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
 
 CREATE TABLE IF NOT EXISTS `oUsers` (
   `username` varchar(64) NOT NULL,
+  `password` varchar(128) NOT NULL,
   `name` varchar(64) NOT NULL,
   `street_address` varchar(64) NOT NULL,
   `city` varchar(64) NOT NULL,

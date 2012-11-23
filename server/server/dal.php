@@ -56,7 +56,7 @@ class DAL
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
-			$query->bindParam(":password", $password, PDO::PARAM_STR, 64);
+			$query->bindParam(":password", $password, PDO::PARAM_STR, 128);
 			$query->execute();
 			return $query->fetchAll(PDO::FETCH_ASSOC);
 		}
@@ -71,13 +71,13 @@ class DAL
 	{
 		try 
 		{
-			$sql = "INSERT INTO oUsers (username, password) VALUES (:username, :password)";
+			$sql = "INSERT INTO oUsers (username, password) VALUES (:username, SHA2(:password, 256))";
 			$sql .= " ON DUPLICATE KEY UPDATE password=SHA2(:u_password, 256)";
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
-			$query->bindParam(":password", $password, PDO::PARAM_STR, 64);
-			$query->bindParam(":u_password", $password, PDO::PARAM_STR, 64);
+			$query->bindParam(":password", $password, PDO::PARAM_STR, 128);
+			$query->bindParam(":u_password", $password, PDO::PARAM_STR, 128);
 			return $query->execute();
 		}
 		catch(PDOException $e) 
@@ -93,15 +93,15 @@ class DAL
 		try 
 		{
 			$sql = "UPDATE oUsers SET";
-			$sql .= " name=:name";
-			$sql .= " street_address=:street_address";
-			$sql .= " city=:city";
-			$sql .= " state=:state";
-			$sql .= " zipcode=:zipcode";
-			$sql .= " website=:website";
-			$sql .= " email=:email";
+			$sql .= " name=:name, ";
+			$sql .= " street_address=:street_address,";
+			$sql .= " city=:city,";
+			$sql .= " state=:state,";
+			$sql .= " zipcode=:zipcode,";
+			$sql .= " website=:website,";
+			$sql .= " email=:email,";
 			$sql .= " about=:about";
-			$sql .= " WHERE username:=username";
+			$sql .= " WHERE username=:username";
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
@@ -154,7 +154,7 @@ class DAL
 		{
 			$sql = "INSERT INTO oAdvertisements (username, title, type, highlights, fine_print,";
 			$sql .= " street_address, city, state, zipcode, radius, latitude, longitude,";
-			$sql .= " regular_price, promotional_price, from, to, url, category)"; 
+			$sql .= " regular_price, promotional_price, from_date, to_date, url, category)"; 
 			$sql .= " VALUES (:username, :title, :type, :highlights, :fine_print,";
 			$sql .= " :street_address, :city, :state, :zipcode, :radius, :latitude, :longitude,";
 			$sql .= " :regular_price, :promotional_price, :from, :to, :url, :category)"; 
@@ -162,8 +162,8 @@ class DAL
 			$sql .= " street_address=:u_street_address, city=:u_city, state=:u_state,";
 			$sql .= " zipcode=:u_zipcode, radius=:u_radius, latitude=:u_latitude, longitude=:u_longitude,";
 			$sql .= " regular_price=:u_regular_price, promotional_price=:u_promotional_price,"; 
-			$sql .= " from=:u_from, to=:u_to, url=:u_url, category=:u_category";
-			
+			$sql .= " from_date=:u_from, to_date=:u_to, url=:u_url, category=:u_category";
+
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
 			$query->bindParam(":title", $title, PDO::PARAM_STR, 64);
@@ -177,8 +177,8 @@ class DAL
 			$query->bindParam(":radius", $radius, PDO::PARAM_INT);
 			$query->bindParam(":latitude", $latitude);
 			$query->bindParam(":longitude", $longitude);
-			$query->bindParam(":regular_price", $regular_price, PDO::PARAM_INT);
-			$query->bindParam(":promotional_price", $promotional_price, PDO::PARAM_INT);
+			$query->bindParam(":regular_price", $regular_price);
+			$query->bindParam(":promotional_price", $promotional_price);
 			$query->bindParam(":from", $from);
 			$query->bindParam(":to", $to);
 			$query->bindParam(":url", $url, PDO::PARAM_STR, 64);
@@ -195,8 +195,8 @@ class DAL
 			$query->bindParam(":u_radius", $radius, PDO::PARAM_INT);
 			$query->bindParam(":u_latitude", $latitude);
 			$query->bindParam(":u_longitude", $longitude);
-			$query->bindParam(":u_regular_price", $regular_price, PDO::PARAM_INT);
-			$query->bindParam(":u_promotional_price", $promotional_price, PDO::PARAM_INT);
+			$query->bindParam(":u_regular_price", $regular_price);
+			$query->bindParam(":u_promotional_price", $promotional_price);
 			$query->bindParam(":u_from", $from);
 			$query->bindParam(":u_to", $to);
 			$query->bindParam(":u_url", $url, PDO::PARAM_STR, 64);
