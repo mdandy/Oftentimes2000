@@ -12,6 +12,13 @@ textarea
 	resize: none;
 }
 
+.alert_box
+{
+	width: 400px;
+	display: block;
+	margin: 0px auto;
+}
+
 /**
  * Sign in and Register
  */

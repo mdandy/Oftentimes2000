@@ -15,10 +15,9 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse"
-						data-target=".nav-collapse"> </a> <a class="brand">Oftentimes2000</a>
+					</a> <a class="brand">Oftentimes2000</a>
 					<div class="nav-collapse collapse">
-						<button class="btn btn-info pull-right logout" onClick="UIManager.logout();">Logout!</button>
+						<button class="btn btn-info pull-right logout" onClick="logout();">Logout!</button>
 						<p class="navbar-text pull-right username">
 							Hi <span class="navbar-link" id="active_user">Username</span>
 						</p>
@@ -37,6 +36,7 @@
 							<li class="nav-header">Menu</li>
 							<li><a href="your_account.html">Your Account</a></li>
 							<li><a href="create_announcement.html">Create Announcement</a></li>
+							<li><a href="your_announcement.html">Your Announcements</a></li>
 						</ul>
 					</div>
 				</div>
@@ -55,5 +55,10 @@
 		</div>
 	</div>
 	
+	<script type="application/javascript">
+		$(document).ready(function(e){
+			init_main_page();
+		});
+	</script>
 </body>
 </html>

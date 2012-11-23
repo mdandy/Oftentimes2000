@@ -8,13 +8,16 @@ function login($username, $password)
 	$user = DAL::login($username, $password);
 	DAL::disconnect();
 	
-	if ($user != NULL)
+	if ($user != NULL || strlen($user[0]) != 0)
 		return json_encode(array ("res" => "TRUE", "data" => $user[0]));
 	return json_encode(array ("res" => "FALSE"));
 }
 
 function update_user_account($username, $password)
 {
+	if (strlen($username) == 0 || strlen($password) == 0)
+		return json_encode(array ("res" => "FALSE"));
+	
 	DAL::connect();
 	$success = DAL::update_user_account($username, $password);
 	DAL::disconnect();

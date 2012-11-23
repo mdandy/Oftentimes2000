@@ -52,7 +52,7 @@ class DAL
 	{
 		try
 		{
-			$sql = "SELECT Username FROM oUsers WHERE username=:username AND password=SHA2(:password, 256)";
+			$sql = "SELECT username FROM oUsers WHERE username=:username AND password=SHA2(:password, 256)";
 			
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);

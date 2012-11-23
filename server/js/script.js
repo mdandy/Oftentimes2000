@@ -1,5 +1,26 @@
 // JavaScript Document
 
+function init_main_page()
+{
+	check_authentication();
+	$("#active_user").html(sessionStorage.username);
+}
+
+function check_authentication()
+{
+	if (!sessionStorage.username)
+		window.location.href = "login.html";
+	
+	if (sessionStorage.username == "")
+		window.location.href = "login.html";
+}
+
+function logout()
+{
+	sessionStorage.username = "";
+	window.location.href = "login.html";
+}
+
 function format_announcement_form(index) 
 {
 	if (index == 1) 
