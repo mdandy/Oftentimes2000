@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 23, 2012 at 02:03 PM
+-- Generation Time: Nov 23, 2012 at 03:02 PM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
   `title` varchar(64) NOT NULL,
   `type` int(11) NOT NULL,
   `highlights` varchar(140) NOT NULL,
-  `fine_print` varchar(140) NOT NULL,
+  `fine_print` varchar(140) DEFAULT NULL,
   `street_address` varchar(64) NOT NULL,
   `city` varchar(64) NOT NULL,
   `state` varchar(64) NOT NULL,
@@ -40,15 +40,15 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
   `radius` int(11) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
-  `regular_price` int(11) NOT NULL,
-  `promotional_price` int(11) NOT NULL,
-  `from` datetime NOT NULL,
-  `to` datetime NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `category` varchar(64) NOT NULL,
+  `regular_price` float DEFAULT NULL,
+  `promotional_price` float DEFAULT NULL,
+  `from_date` datetime NOT NULL,
+  `to_date` datetime NOT NULL,
+  `url` varchar(64) DEFAULT NULL,
+  `category` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`,`username`),
   KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
