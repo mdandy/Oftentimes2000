@@ -1,116 +1,140 @@
 <?xml version="1.0"?>
 <api>
 	<description>
-		<![CDATA[This is an API to interact with GT CRC Reservation system]]>
+		<![CDATA[This is an API to interact with Oftentimes2000 system]]>
 	</description>
 	
-	<command id='reservation' security='protected'>
-		<description><![CDATA[This API lets you to reserve a court and retrieve reservation information]]></description>
-		
-		<index>
-			<description><![CDATA[
-				List of all court reservations.
-			]]></description>
-			<action file='server/reservation.php'><![CDATA[
-				date_default_timezone_set('UTC');
-				$now = date("Y-m-d H:00:00");	// YYYY-MM-DD HH:MM:SS UTC
-				echo get_all_reservations(-1, $now);
-			]]></action>
-		</index>
-        
-		<get>
-			<description><![CDATA[
-				Retrieve court reservations.
-			]]></description>
-			<action file='server/reservation.php'><![CDATA[
-				$arg = $_REST['reservation'];
-				if ($arg == 'active')
-					echo get_reservations_by_active_user();
-				else
-				{
-					if (is_numeric($arg))
-					{
-						$court_id = intval($arg);
-						if (isset($_GET['interval']))
-						{
-							$interval = intval($_GET['interval']);
-							echo get_reservations_by_time($court_id, $_GET['start_time'], $interval);
-						}
-						else
-							echo get_reservations_by_time($court_id, $_GET['start_time']);
-					}
-					else
-						echo get_reservations_by_user_id($arg);
-				}
-			]]></action>
-		</get>
+	<command id='login' security='public'>
+		<description><![CDATA[This API lets you to sign in a user]]></description>
 		
 		<post>
 			<description><![CDATA[
-				Create a reservation for CRC court. The interval of reservation is one hour and
-				the user can only reserve up to 48 hours in advance.
+				User login
 			]]></description>
-			<action file='server/reservation.php'><![CDATA[
-				$court_number = intval($_POST['court_number']);
-				echo create_reservation($court_number, $_POST['start_time']);
+			<action file='server/user.php'><![CDATA[
+				$username = $_POST['username'];
+				$password = $_POST['password'];
+				echo login($username, $password);
+			]]></action>
+		</post>
+	</command>
+	
+	<command id='user' security='public'>
+		<description><![CDATA[This API lets you to get information about user]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Create / update user account information
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				$q = $_POST['q'];
+				if (strcmp($type, "account") == 0)
+				{
+					$username = $_POST['username'];
+					$password = $_POST['password'];
+					echo update_user_account($username, $password);
+				}
+				else if (strcmp($type, "profile") == 0)
+				{
+					$username = $_POST['username'];
+					$name = $_POST['name'];
+					$street_address = $_POST['street_address'];
+					$city = $_POST['city'];
+					$state = $_POST['state'];
+					$zipcode = $_POST['zipcode'];
+					$website = $_POST['website'];
+					$email = $_POST['email'];
+					$about = $_POST['about'];
+					echo update_user_profile($username, $name, $street_address, $city, 
+							 				 $state, $zipcode, $website="", $email, $about);
+				}
 			]]></action>
 		</post>
 		
-		<!-- Unsupported
-		<put>
+		<get>
 			<description><![CDATA[
-				This is how you can update a simple item
-			]]></description>
-			<action file='server/reservation.php'><![CDATA[
-				echo '501 Not Supported';
-			]]></action>
-		</put>
-		-->
-
-		<delete>
-			<description><![CDATA[
-				Cancel reservations.
-			]]></description>
-			<action file='server/reservation.php'><![CDATA[
-				if (isset($_GET['reservation_id']))
-				{
-					echo $_GET['reservation_id'];
-					echo cancel_reservation_by_id($_GET['reservation_id']);
-				}
-				else
-				{
-					$court_number = intval($_REST['reservation']);
-					$interval = intval($_GET['interval']);
-					$comment = $_GET['comment'];
-					echo cancel_reservations_by_time($court_number, $_GET['start_time'], $interval, $comment);
-				}
-			]]></action>
-		</delete>
-	</command>
-	
-	
-	<command id='user' security='protected'>
-		<description><![CDATA[This API lets to get information about current active user]]></description>
-		
-		<index>
-			<description><![CDATA[
-				Retrieve active user.
+				Retrieve user account information.
 			]]></description>
 			<action file='server/user.php'><![CDATA[
-				echo get_active_user();
+				$username = $_REST['user'];
+				echo get_user_profile($username);
 			]]></action>
-		</index>
+		</get>
+	</command>
+	
+	<command id='announcement' security='public'>
+		<description><![CDATA[This API lets you to create and retrieve announcement]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Create / update announcement
+			]]></description>
+			<action file='server/announcement.php'><![CDATA[
+				$type = $_POST['type'];
+				$username = $_POST['username'];
+				$title = $_POST['title'];
+				$highlights = $_POST['highlights'];
+				$street_address = $_POST['street_address'];
+				$city = $_POST['city'];
+				$state = $_POST['state'];
+				$zipcode = $_POST['zipcode'];
+				$radius = $_POST['radius'];
+				$from = $_POST['from'];
+				$to = $_POST['to'];
+				$url = $_POST['url'];
+				$category = $_POST['category'];
+				
+				if (strcmp($type, "advertisement") == 0)
+				{
+					$fine_print = $_POST['fine_print'];
+					$regular_price = $_POST['regular_price'];
+					$promotional_price = $_POST['promotional_price'];
+					
+					echo upsert_advertisement($username, $title, $highlights, $fine_print="", 
+							  				  $street_address, $city, $state, $zipcode, $radius,
+							  				  $regular_price=-1, $promotional_price=-1, 
+							  				  $from, $to, $url="", $category);
+				}
+				else if (strcmp($type, "psa") == 0)
+				{
+					echo upsert_psa($username, $title, $highlights, 
+									$street_address, $city, $state, $zipcode, $radius,
+									$from, $to, $url="", $category);
+				}
+				else if (strcmp($type, "event") == 0)
+				{
+					echo upsert_event($username, $title, $highlights,
+					  				  $street_address, $city, $state, $zipcode, $radius,
+					  				  $from, $to, $url="", $category);
+				}
+			]]></action>
+		</post>
 		
 		<get>
 			<description><![CDATA[
-				Retrieve privelege level of a user.
+				Get announcement.
 			]]></description>
-			<action file='server/user.php'><![CDATA[
-				$user_id = $_REST['user'];
-				if ($user_id == 'active')
-					$user_id = get_active_user();
-				echo json_encode(is_admin($user_id));
+			<action file='server/announcement.php'><![CDATA[
+				$username = $_REST['announcement'];
+				if (isset($_GET['type']))
+				{
+					$type = $_GET['type'];
+					echo get_announcement_by_type($username, $type);
+				}
+				else
+					echo get_announcement($username);
 			]]></action>
 		</get>
+		
+		<delete>
+			<description><![CDATA[
+				Delete announcement
+			]]></description>
+			<action file='server/announcement.php'><![CDATA[
+				$id = $_REST['announcement'];
+				echo delete_announcement($id);
+			]]></action>
+		</delete>
+		
 	</command>
 </api>

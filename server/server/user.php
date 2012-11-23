@@ -7,7 +7,9 @@ function login($username, $password)
 	DAL::connect();
 	$user = DAL::login($username, $password);
 	DAL::disconnect();
-	return array ("res" => $user);
+	
+	$res = array ("res" => $user);
+	return json_encode($res);
 }
 
 function update_user_account($username, $password)
@@ -16,9 +18,10 @@ function update_user_account($username, $password)
 	$success = DAL::register_user($username, $password);
 	DAL::disconnect();
 	
+	$res = array ("res" => "FALSE");
 	if ($success)
-		return array ("res" => "TRUE");
-	array ("res" => "FALSE");
+		$res = array ("res" => "TRUE");
+	return json_encode($res);
 }
 
 function update_user_profile($username, $name, $street_address, $city, 
@@ -30,9 +33,10 @@ function update_user_profile($username, $name, $street_address, $city,
 							 
 	DAL::disconnect();
 	
+	$res = array ("res" => "FALSE");
 	if ($success)
-		return array ("res" => "TRUE");
-	array ("res" => "FALSE");
+		$res = array ("res" => "TRUE");
+	return json_encode($res);
 }
 
 function get_user_profile($username)
@@ -41,7 +45,7 @@ function get_user_profile($username)
 	$user = DAL::get_user_profile($username);
 	DAL::disconnect();
 	
-	return $user;
+	return json_encode($user);
 }
 
 ?>

@@ -87,9 +87,10 @@ function upsert_announcement($username, $title, $type, $highlights, $fine_print=
 							 		   $from, $to, $url="", $category);
 	DAL::disconnect();
 	
+	$res = array ("res" => "FALSE");
 	if ($success)
-		return array ("res" => "TRUE");
-	array ("res" => "FALSE");
+		$res = array ("res" => "TRUE");
+	return json_encode($res);
 }
 
 function delete_announcement($id)
@@ -98,9 +99,10 @@ function delete_announcement($id)
 	$success = DAL::delete_announcement($id);
 	DAL::disconnect();
 	
+	$res = array ("res" => "FALSE");
 	if ($success)
-		return array ("res" => "TRUE");
-	array ("res" => "FALSE");
+		$res = array ("res" => "TRUE");
+	return json_encode($res);
 }
 
 function get_announcement($username)
@@ -109,7 +111,7 @@ function get_announcement($username)
 	$annoucements = DAL::get_announcement($username);
 	DAL::disconnect();
 	
-	return $annoucements;
+	return json_encode($annoucements);
 }
 
 function get_announcement_by_type($username, $type)
@@ -119,7 +121,7 @@ function get_announcement_by_type($username, $type)
 	$annoucements = DAL::get_announcement_by_type($username, $type);
 	DAL::disconnect();
 	
-	return $annoucements;
+	return json_encode($annoucements);
 }
 
 ?>
