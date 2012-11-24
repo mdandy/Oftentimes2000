@@ -27,9 +27,9 @@ public class Crypto
 	}
 
 	/**
-	 * Perform MD5 hash.
+	 * Perform SHA256 hash.
 	 * @param message the message digest
-	 * @return the MD5 hash of the message digest
+	 * @return the SHA25 hash of the message digest
 	 */
 	public static String sha256(String message)
 	{

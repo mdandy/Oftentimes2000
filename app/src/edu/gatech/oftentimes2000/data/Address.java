@@ -7,32 +7,32 @@ public class Address
 	/**
 	 * The street
 	 */
-	public String street;
+	public String street = "";
 	
 	/**
 	 * The city
 	 */
-	public String city;
+	public String city = "";
 	
 	/**
 	 * The state
 	 */
-	public String state;
+	public String state = "";
 	
 	/**
 	 * The zip code
 	 */
-	public int zipcode;
+	public String zipcode = "";
 	
 	/**
 	 * The phone number
 	 */
-	public String phoneNumber;
+	public String phoneNumber = "";
 	
 	/**
-	 * The URL
+	 * The radius
 	 */
-	public String url;
+	public int radius = 0;
 	
 	/**
 	 * The geolocation
@@ -58,7 +58,7 @@ public class Address
 		output += this.street + "\n";
 		output += this.city + ", " + this.state + " " + this.zipcode + "\n";
 		output += this.phoneNumber + "\n";
-		output += this.url + "\n";
+		output += this.radius + "\n";
 		output += this.geopoint.toString();
 		return output;
 	}

@@ -12,5 +12,7 @@
     <string name="ok">OK</string>
     <string name="login">Login</string>
     <string name="menu_map">View Map</string>
+    <string name="map_it">Map It!</string>
+    <string name="placeholder">placeholder</string>
 
 </resources>

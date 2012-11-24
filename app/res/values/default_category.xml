@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="default_category">
+        <item>Advertisement</item>
+        <item>Public Service Announcement</item>
+		<item>Event</item>
+    </string-array>
+</resources>

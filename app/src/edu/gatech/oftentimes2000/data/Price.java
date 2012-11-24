@@ -5,17 +5,17 @@ public class Price
 	/**
 	 * The original price
 	 */
-	public float originalPrice;
+	public double originalPrice = 0.0;
 	
 	/**
 	 * The promotional price
 	 */
-	public float promotionalPrice;
+	public double promotionalPrice = 0.0;
 	
 	/**
-	 * The discount in percentaage
+	 * The discount in percentage
 	 */
-	public int discount;
+	public int discount = 0;
 	
 	/**
 	 * Calculate the discount

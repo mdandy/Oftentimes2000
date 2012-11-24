@@ -17,8 +17,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.util.Log;
@@ -110,9 +110,9 @@ public class HTTPUtil
 	 * @param response the HTTP response
 	 * @return the JSON
 	 */
-	public static JSONArray getResponseAsJSON(HttpResponse response)
+	public static JSONObject getResponseAsJSON(HttpResponse response)
 	{
-		JSONArray result = null;
+		JSONObject result = null;
 
 		try 
 		{
@@ -123,7 +123,7 @@ public class HTTPUtil
 				builder.append(line).append("\n");
 
 			JSONTokener tokener = new JSONTokener(builder.toString());
-			result = new JSONArray(tokener);
+			result = new JSONObject(tokener);
 		} 
 		catch (UnsupportedEncodingException e) 
 		{
