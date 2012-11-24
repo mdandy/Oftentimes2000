@@ -127,6 +127,11 @@
 					$id = $_GET['id'];
 					echo delete_announcement($id);
 				}
+				else if (strcmp($q, 'all') == 0)
+				{
+					$type = $_GET['type'];
+					echo get_announcement_by_type("", $type);
+				}
 				else if (isset($_GET['type']))
 				{
 					$type = $_GET['type'];

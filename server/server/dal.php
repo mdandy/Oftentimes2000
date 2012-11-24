@@ -265,14 +265,27 @@ class DAL
 		return NULL;
 	}
 	
-	public static function get_announcement_by_type($username, $type)
+	public static function get_announcement_by_type($username="", $type)
 	{
 		try 
 		{
-			$sql = "SELECT * FROM oAdvertisements WHERE username=:username AND type=:type";
-			$query = self::$dbh->prepare($sql);
-			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
-			$query->bindParam(":type", $type, PDO::PARAM_INT);
+			$sql = "";
+			$query = NULL;
+			
+			if (strlen($username) == 0)
+			{
+				$sql = "SELECT * FROM oAdvertisements WHERE type=:type";
+				$query = self::$dbh->prepare($sql);
+				$query->bindParam(":type", $type, PDO::PARAM_INT);
+			}
+			else
+			{
+				$sql = "SELECT * FROM oAdvertisements WHERE username=:username AND type=:type";
+				$query = self::$dbh->prepare($sql);
+				$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
+				$query->bindParam(":type", $type, PDO::PARAM_INT);
+			}
+			
 			$query->execute();
 			return $query->fetchAll(PDO::FETCH_ASSOC);
 		}

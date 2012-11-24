@@ -127,7 +127,7 @@ function get_announcement($username)
 	return json_encode(array ("res" => "FALSE"));
 }
 
-function get_announcement_by_type($username, $type)
+function get_announcement_by_type($username="", $type)
 {
 	DAL::connect();
 	$type = get_type($type);
