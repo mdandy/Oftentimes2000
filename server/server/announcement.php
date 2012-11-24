@@ -7,7 +7,7 @@ function upsert_advertisement($id=-1, $username, $title, $highlights, $fine_prin
 							  $regular_price=-1, $promotional_price=-1, 
 							  $from, $to, $url="", $category)
 {
-	$geopoint = get_geopoint();
+	$geopoint = get_geopoint($street_address, $city, $state, $zipcode);
 	$latitude = $geopoint["latitude"];
 	$longitude = $geopoint["longitude"];
 	$type = 1;
@@ -23,7 +23,7 @@ function upsert_psa($id=-1, $username, $title, $highlights,
 					$street_address, $city, $state, $zipcode, $radius,
 					$from, $to, $url="", $category)
 {
-	$geopoint = get_geopoint();
+	$geopoint = get_geopoint($street_address, $city, $state, $zipcode);
 	$latitude = $geopoint["latitude"];
 	$longitude = $geopoint["longitude"];
 	$type = 2;
@@ -39,7 +39,7 @@ function upsert_event($id=-1, $username, $title, $highlights,
 					  $street_address, $city, $state, $zipcode, $radius,
 					  $from, $to, $url="", $category)
 {
-	$geopoint = get_geopoint();
+	$geopoint = get_geopoint($street_address, $city, $state, $zipcode);
 	$latitude = $geopoint["latitude"];
 	$longitude = $geopoint["longitude"];
 	$type = 3;
@@ -65,7 +65,7 @@ function get_type($type)
 	return -1;	
 }
 
-function get_geopoint()
+function get_geopoint($street_address, $city, $state, $zipcode)
 {
 	$latitude = 0;
 	$longitude = 0;
