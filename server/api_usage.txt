@@ -29,7 +29,7 @@ Create/ Update Announcement
 
 * Advertisement
 curl -i -X POST -d "username=user" \
-	-d "title=ads" -d "highlights=highlights" -d "fine_print=fine print" \
+	-d "id=-1" -d title=ads" -d "highlights=highlights" -d "fine_print=fine print" \
 	-d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" -d "radius=5" \
 	-d "regular_price=29.99" -d "promotional_price=14.99" \
 	-d "from=2012-11-23 00:00:00" -d "to=2012-11-25 23:59:59" \
@@ -39,7 +39,7 @@ return: {"res":"TRUE"} or {"res":"FALSE"} otherwise
 
 * Public Service Announcement (PSA)
 curl -i -X POST -d "username=user" \
-	-d "title=psa" -d "highlights=highlights" \
+	-d "id=-1" -d "title=psa" -d "highlights=highlights" \
 	-d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" -d "radius=5" \
 	-d "from=2012-11-23 00:00:00" -d "to=2012-11-25 23:59:59" \
 	-d "url=domain.com" -d "category=#weather alert" \
@@ -48,7 +48,7 @@ return: {"res":"TRUE"} or {"res":"FALSE"} otherwise
 
 * Event
 curl -i -X POST -d "username=user" \
-	-d "title=event" -d "highlights=highlights" \
+	-d "id=-1" -d "title=event" -d "highlights=highlights" \
 	-d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" -d "radius=5" \
 	-d "from=2012-11-23 00:00:00" -d "to=2012-11-25 23:59:59" \
 	-d "url=domain.com" -d "category=#weather alert" \

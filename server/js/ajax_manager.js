@@ -193,11 +193,11 @@ var AJAXManager =
 				if (data.res == "TRUE")
 				{
 					// Save in the session storage
-					sessionStorage.street_address = data.street_address;
-					sessionStorage.city = data.city;
-					sessionStorage.state = data.state;
-					sessionStorage.zipcode = data.zipcode;
-					sessionStorage.website = data.website;
+					sessionStorage.street_address = data.data.street_address;
+					sessionStorage.city = data.data.city;
+					sessionStorage.state = data.data.state;
+					sessionStorage.zipcode = data.data.zipcode;
+					sessionStorage.website = data.data.website;
 					
 					callback(data.data);
 				}
@@ -283,7 +283,7 @@ var AJAXManager =
 		$.ajaxSetup ({
 			cache: true
 		});
-		var ajax_load = "<p><img src=\"image/ajax-loader.gif\" alt=\"loading...\" /></p>";
+		var ajax_load = "<p><img src=\"image/ajax-loader.gif\" /> Loading...</p>";
 		var loadUrl = AJAXManager.url + "announcement/" + username;
 	
 		$("#announcement_list_alert").html(ajax_load);
@@ -310,6 +310,32 @@ var AJAXManager =
 			error: function(jqXHR, textStatus, errorThrown) 
 			{
 				$("#announcement_list_alert").empty();
+				console.error(textStatus);
+			}
+		});
+	},
+	
+	get_announcement_by_id: function (id, callback)
+	{	
+		$.ajaxSetup ({
+			cache: true
+		});
+		
+		var loadUrl = AJAXManager.url + "announcement/" + id;
+		$.ajax ({
+			type: "GET",
+			url: loadUrl,
+			dataType: "json",
+			timeout: 5000, //5 seconds
+			success: function(data) 
+			{
+				if (data.res == "TRUE")
+				{
+					callback(data.data);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
 				console.error(textStatus);
 			}
 		});
@@ -348,5 +374,210 @@ var AJAXManager =
 				console.error(textStatus);
 			}
 		});
+	},
+	
+	create_announcement: function(type)
+	{
+		if (type == "advertisement")
+		{
+			var form = document.forms["create_advertisement_form"];
+			var username = sessionStorage.username;
+			var id = form.ads_id.value;
+			var title = form.ads_title.value;
+			var highlights = form.ads_highlights.value;
+			var fine_print = form.ads_fine_print.value;
+			var street_address = form.ads_street_address.value;
+			var city = form.ads_city.value;
+			var state = form.ads_state.value;
+			var zipcode = form.ads_zipcode.value;
+			var radius = form.ads_radius.value;
+			var regular_price = form.ads_regular_price.value;
+			var promotional_price = form.ads_promotional_price.value;
+			var from = form.ads_from.value;
+			var to = form.ads_to.value;
+			var url = form.ads_url.value;
+			var category = form.ads_category.value;
+			
+			$.ajaxSetup ({
+				cache: false
+			});
+	
+			var loadUrl = AJAXManager.url + "announcement/advertisement";
+			var query = { username: username,
+						  id: id,
+						  title: title,
+						  highlights: highlights,
+						  fine_print: fine_print,
+					  	  street_address: street_address, 
+					  	  city: city, 
+					  	  state: state, 
+					  	  zipcode: zipcode,
+						  radius: radius,
+						  regular_price: regular_price,
+						  promotional_price: promotional_price,
+						  from: from,
+						  to: to,
+					  	  url: url, 
+					  	  category: category };
+					  
+			$.ajax ({
+				type: "POST",
+				url: loadUrl,
+				data: query,
+				dataType: "json",
+				timeout: 5000, //5 seconds
+				success: function(data) 
+				{
+					if (data.res == "TRUE")
+					{
+						var template = "<div class='alert alert-success'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Success!</strong> Your announcement has been created/ updated.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+					else
+					{
+						var template = "<div class='alert alert-error'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Error!</strong> Unable to create/ update your announcement.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					console.error(textStatus);
+				}
+			});
+		}
+		else if (type == "psa")
+		{
+			var form = document.forms["create_psa_form"];
+			var username = sessionStorage.username;
+			var id = form.psa_id.value;
+			var title = form.psa_title.value;
+			var highlights = form.psa_highlights.value;
+			var street_address = form.psa_street_address.value;
+			var city = form.psa_city.value;
+			var state = form.psa_state.value;
+			var zipcode = form.psa_zipcode.value;
+			var radius = form.psa_radius.value;
+			var from = form.psa_from.value + " " + form.psa_from_time.value;
+			var to = form.psa_to.value + " " + form.psa_to_time.value;
+			var url = form.psa_url.value;
+			var category = form.psa_category.value;
+			
+			$.ajaxSetup ({
+				cache: false
+			});
+	
+			var loadUrl = AJAXManager.url + "announcement/psa";
+			var query = { username: username,
+						  id: id,
+						  title: title,
+						  highlights: highlights,
+					  	  street_address: street_address, 
+					  	  city: city, 
+					  	  state: state, 
+					  	  zipcode: zipcode,
+						  radius: radius,
+						  from: from,
+						  to: to,
+					  	  url: url, 
+					  	  category: category };
+					  
+			$.ajax ({
+				type: "POST",
+				url: loadUrl,
+				data: query,
+				dataType: "json",
+				timeout: 5000, //5 seconds
+				success: function(data) 
+				{
+					if (data.res == "TRUE")
+					{
+						var template = "<div class='alert alert-success'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Success!</strong> Your announcement has been created/ updated.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+					else
+					{
+						var template = "<div class='alert alert-error'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Error!</strong> Unable to create/ update your announcement.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					console.error(textStatus);
+				}
+			});
+		}
+		else if (type == "event")
+		{
+			var form = document.forms["create_event_form"];
+			var username = sessionStorage.username;
+			var id = form.event_id.value;
+			var title = form.event_title.value;
+			var highlights = form.event_highlights.value;
+			var street_address = form.event_street_address.value;
+			var city = form.event_city.value;
+			var state = form.event_state.value;
+			var zipcode = form.event_zipcode.value;
+			var radius = form.event_radius.value;
+			var from = form.event_from.value + " " + form.event_from_time.value;
+			var to = form.event_to.value + " " + form.event_to_time.value;
+			var url = form.event_url.value;
+			var category = form.event_category.value;
+			
+			$.ajaxSetup ({
+				cache: false
+			});
+	
+			var loadUrl = AJAXManager.url + "announcement/event";
+			var query = { username: username,
+						  id: id,
+						  title: title,
+						  highlights: highlights,
+					  	  street_address: street_address, 
+					  	  city: city, 
+					  	  state: state, 
+					  	  zipcode: zipcode,
+						  radius: radius,
+						  from: from,
+						  to: to,
+					  	  url: url, 
+					  	  category: category };
+					  
+			$.ajax ({
+				type: "POST",
+				url: loadUrl,
+				data: query,
+				dataType: "json",
+				timeout: 5000, //5 seconds
+				success: function(data) 
+				{
+					if (data.res == "TRUE")
+					{
+						var template = "<div class='alert alert-success'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Success!</strong> Your announcement has been created/ updated.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+					else
+					{
+						var template = "<div class='alert alert-error'>";
+						template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+						template += "<strong>Error!</strong> Unable to create/ update your announcement.</div>";
+						$("#create_announcement_alert").append(template);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					console.error(textStatus);
+				}
+			});
+		}
 	}
 };

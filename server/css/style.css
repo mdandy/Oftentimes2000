@@ -93,7 +93,20 @@ header button.logout
 	margin-bottom: 20px;	
 }
 
+.announcement_title
+{
+	width: 200px;	
+}
+
 .annoucement_list_control button
 {
 	margin-right: 20px;	
+}
+
+/**
+ * Create Announcement
+ */
+#tos
+{
+	margin-bottom: 20px;	
 }

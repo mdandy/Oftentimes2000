@@ -144,7 +144,7 @@ class DAL
 	/**
 	 * Announcement
 	 */
-	public static function upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+	public static function insert_announcement($username, $title, $type, $highlights, $fine_print="", 
 											   $street_address, $city, $state, $zipcode, $radius,
 											   $latitude, $longitude,
 											   $regular_price=-1, $promotional_price=-1, 
@@ -158,11 +158,6 @@ class DAL
 			$sql .= " VALUES (:username, :title, :type, :highlights, :fine_print,";
 			$sql .= " :street_address, :city, :state, :zipcode, :radius, :latitude, :longitude,";
 			$sql .= " :regular_price, :promotional_price, :from, :to, :url, :category)"; 
-			$sql .= " ON DUPLICATE KEY UPDATE title=:u_title, type=:u_type, highlights=:u_highlights, fine_print=:u_fine_print,";
-			$sql .= " street_address=:u_street_address, city=:u_city, state=:u_state,";
-			$sql .= " zipcode=:u_zipcode, radius=:u_radius, latitude=:u_latitude, longitude=:u_longitude,";
-			$sql .= " regular_price=:u_regular_price, promotional_price=:u_promotional_price,"; 
-			$sql .= " from_date=:u_from, to_date=:u_to, url=:u_url, category=:u_category";
 
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
@@ -183,7 +178,34 @@ class DAL
 			$query->bindParam(":to", $to);
 			$query->bindParam(":url", $url, PDO::PARAM_STR, 64);
 			$query->bindParam(":category", $category, PDO::PARAM_STR, 64);
-			
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return false;
+	}
+	
+	public static function update_announcement($id, $username, $title, $type, $highlights, $fine_print="", 
+											   $street_address, $city, $state, $zipcode, $radius,
+											   $latitude, $longitude,
+											   $regular_price=-1, $promotional_price=-1, 
+											   $from, $to, $url="", $category)
+	{
+		try 
+		{
+			$sql = "UPDATE oAdvertisements SET";
+			$sql .= " title=:u_title, type=:u_type, highlights=:u_highlights, fine_print=:u_fine_print,";
+			$sql .= " street_address=:u_street_address, city=:u_city, state=:u_state,";
+			$sql .= " zipcode=:u_zipcode, radius=:u_radius, latitude=:u_latitude, longitude=:u_longitude,";
+			$sql .= " regular_price=:u_regular_price, promotional_price=:u_promotional_price,"; 
+			$sql .= " from_date=:u_from, to_date=:u_to, url=:u_url, category=:u_category";
+			$sql .= " WHERE id=:id AND username=:username";
+
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":id", $id, PDO::PARAM_INT);
+			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_title", $title, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_type", $type, PDO::PARAM_INT);
 			$query->bindParam(":u_highlights", $highlights, PDO::PARAM_STR, 140);

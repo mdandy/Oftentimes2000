@@ -2,7 +2,7 @@
 
 require_once("dal.php");
 
-function upsert_advertisement($username, $title, $highlights, $fine_print="", 
+function upsert_advertisement($id=-1, $username, $title, $highlights, $fine_print="", 
 							  $street_address, $city, $state, $zipcode, $radius,
 							  $regular_price=-1, $promotional_price=-1, 
 							  $from, $to, $url="", $category)
@@ -12,14 +12,14 @@ function upsert_advertisement($username, $title, $highlights, $fine_print="",
 	$longitude = $geopoint["longitude"];
 	$type = 1;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
+	return upsert_announcement($id, $username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
 							   $regular_price, $promotional_price, 
 							   $from, $to, $url, $category);
 }
 
-function upsert_psa($username, $title, $highlights, 
+function upsert_psa($id=-1, $username, $title, $highlights, 
 					$street_address, $city, $state, $zipcode, $radius,
 					$from, $to, $url="", $category)
 {
@@ -28,14 +28,14 @@ function upsert_psa($username, $title, $highlights,
 	$longitude = $geopoint["longitude"];
 	$type = 2;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
+	return upsert_announcement($id, $username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
 							   $regular_price, $promotional_price, 
 							   $from, $to, $url, $category);
 }
 
-function upsert_event($username, $title, $highlights,
+function upsert_event($id=-1, $username, $title, $highlights,
 					  $street_address, $city, $state, $zipcode, $radius,
 					  $from, $to, $url="", $category)
 {
@@ -44,7 +44,7 @@ function upsert_event($username, $title, $highlights,
 	$longitude = $geopoint["longitude"];
 	$type = 3;
 	
-	return upsert_announcement($username, $title, $type, $highlights, $fine_print, 
+	return upsert_announcement($id, $username, $title, $type, $highlights, $fine_print, 
 							   $street_address, $city, $state, $zipcode, $radius,
 							   $latitude, $longitude,
 							   $regular_price, $promotional_price, 
@@ -73,18 +73,29 @@ function get_geopoint()
 	return array("latitude" => $latitude, "longitude" => $longitude);
 }
 
-function upsert_announcement($username, $title, $type, $highlights, $fine_print="", 
+function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fine_print="", 
 							 $street_address, $city, $state, $zipcode, $radius,
 							 $latitude, $longitude,
 							 $regular_price=-1, $promotional_price=-1, 
 							 $from, $to, $url="", $category)
 {
 	DAL::connect();
-	$success = DAL::upsert_announcement($username, $title, $type, $highlights, $fine_print, 
-							 		   $street_address, $city, $state, $zipcode, $radius,
-							 		   $latitude, $longitude,
-							 		   $regular_price, $promotional_price, 
-							 		   $from, $to, $url, $category);
+	if ($id == -1)
+	{
+		$success = DAL::insert_announcement($username, $title, $type, $highlights, $fine_print, 
+										    $street_address, $city, $state, $zipcode, $radius,
+										    $latitude, $longitude,
+										    $regular_price, $promotional_price, 
+										    $from, $to, $url, $category);
+	}
+	else
+	{
+		$success = DAL::update_announcement($id, $username, $title, $type, $highlights, $fine_print, 
+										    $street_address, $city, $state, $zipcode, $radius,
+										    $latitude, $longitude,
+										    $regular_price, $promotional_price, 
+										    $from, $to, $url, $category);
+	}
 	DAL::disconnect();
 	
 	$res = array ("res" => "FALSE");
