@@ -52,18 +52,17 @@ var AJAXManager =
 	
 	register: function()
 	{
-		var form = document.forms["create_account_form"];
+		var form = document.forms["signup_form"];
 		var username = form.username.value;
 		var password = form.password.value;
-		var password2 = form.confirm_password.value;
-		var user_type = form.user_type.value;
+		var password2 = form.password2.value;
 		
 		if (password !== password2)
 		{
 			var template = "<div class='alert alert-error'>";
 			template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
 			template += "<strong>Error!</strong> Password does not match.</div>";
-			$("#create_account_alert").append(template);
+			$("#signup_alert").append(template);
 			return;
 		}
 		
@@ -72,7 +71,7 @@ var AJAXManager =
 			var template = "<div class='alert alert-error'>";
 			template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
 			template += "<strong>Error!</strong> Username and/ or password cannot be empty.</div>";
-			$("#create_account_alert").append(template);
+			$("#signup_alert").append(template);
 			return;
 		}
 	
@@ -81,9 +80,8 @@ var AJAXManager =
 			cache: false
 		});
 
-		var loadUrl = "server/login.php";
-		var query = { q : "register",
-					  username: username, 
+		var loadUrl = AJAXManager.url + "user/account";
+		var query = { username: username, 
 					  password: password };
 
 		$.ajax ({
@@ -97,17 +95,14 @@ var AJAXManager =
 				if (data.res == "TRUE")
 				{
 					sessionStorage.username = username;
-					if (user_type == "faculty")
-						window.location.href = "index.html?register=faculty";
-					else
-						window.location.href = "index.html?register=student";
+					window.location.href = "index.html";
 				}
 				else
 				{
 					var template = "<div class='alert alert-error'>";
 					template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
 					template += "<strong>Error!</strong> Unable to create account.</div>";
-					$("#create_account_alert").append(template);
+					$("#signup_alert").append(template);
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) 
