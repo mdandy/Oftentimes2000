@@ -14,5 +14,6 @@
     <string name="menu_map">View Map</string>
     <string name="map_it">Map It!</string>
     <string name="placeholder">placeholder</string>
+    <string name="nothing">There is nothing here :(</string>
 
 </resources>

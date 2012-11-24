@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class AnnouncementSelection extends Activity implements OnItemClickListener
 {
@@ -22,6 +23,7 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 	
 	private Button bMapIt;
 	private ProgressBar pbLoading;
+	private TextView tvNothing;
 	private ListView lvAnnouncements;
 	private ContentManager contentManager;
 	private AnnouncementFetcher fetcher;
@@ -43,8 +45,10 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 		this.bMapIt = (Button) findViewById(R.id.bMapIt);
 		this.pbLoading = (ProgressBar) findViewById(R.id.pbAnnouncementLoading);
 		this.lvAnnouncements = (ListView) findViewById(R.id.lvAnnouncement);
+		this.tvNothing = (TextView) findViewById(R.id.tvAnnouncementNothing);
 		
 		// Loading
+		this.tvNothing.setVisibility(View.GONE);
 		this.lvAnnouncements.setVisibility(View.GONE);
 		this.fetch(category);
 	}
@@ -77,16 +81,25 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 	
 	private void publish(Announcement[] announcements)
 	{
-		// Init array adapter
-		ArrayAdapter<Announcement> adapter = new AnnouncementAdapter(this, announcements);
-		
-		// Init list view
-		this.lvAnnouncements.setAdapter(adapter);
-		this.lvAnnouncements.setOnItemClickListener(this);
-		
-		// Display it
-		this.pbLoading.setVisibility(View.GONE);
-		this.lvAnnouncements.setVisibility(View.VISIBLE);
+		if (announcements.length == 0)
+		{
+			// Display it
+			this.pbLoading.setVisibility(View.GONE);
+			this.tvNothing.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			// Init array adapter
+			ArrayAdapter<Announcement> adapter = new AnnouncementAdapter(this, announcements);
+			
+			// Init list view
+			this.lvAnnouncements.setAdapter(adapter);
+			this.lvAnnouncements.setOnItemClickListener(this);
+			
+			// Display it
+			this.pbLoading.setVisibility(View.GONE);
+			this.lvAnnouncements.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	public class AnnouncementFetcher extends AsyncTask<String, Void, Announcement[]>
