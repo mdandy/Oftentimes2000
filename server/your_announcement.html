@@ -1,10 +1,68 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+	<meta charset="UTF-8">
+	<title>Oftentimes2000</title>
+	<script type="application/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="application/javascript" src="js/bootstrap.js"></script>
+	<script type="application/javascript" src="js/ajax_manager.js"></script>
+	<script type="application/javascript" src="js/script.js"></script>
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+
+	<header>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					</a> <a class="brand">Oftentimes2000</a>
+					<div class="nav-collapse collapse">
+						<button class="btn btn-info pull-right logout" onClick="logout();">Logout!</button>
+						<p class="navbar-text pull-right username">
+							Hi <span class="navbar-link" id="active_user">Username</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div id="container">
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span3">
+					<div class="well sidebar-nav">
+						<ul class="nav nav-list">
+							<li class="nav-header">Menu</li>
+							<li><a href="your_account.html">Your Account</a></li>
+							<li><a href="create_announcement.html">Create Announcement</a></li>
+							<li class="active"><a href="your_announcement.html">Your Announcements</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="span9">
+					<div class="alert alert-info">
+						<h1>Welcome to Oftentimes2000!</h1>
+						<p>
+							List of your announcements.
+						</p>
+					</div>
+					
+					<div id="announcement_list_alert"></div>
+					<div id="announcement_list">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="application/javascript">
+		$(document).ready(function(e){
+			init_main_page();
+			init_announcement_list();
+		});
+	</script>
 </body>
 </html>

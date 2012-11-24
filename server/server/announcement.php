@@ -128,4 +128,15 @@ function get_announcement_by_type($username, $type)
 	return json_encode(array ("res" => "FALSE"));
 }
 
+function get_announcement_by_id($id)
+{
+	DAL::connect();
+	$annoucement = DAL::get_announcement_by_id($id);
+	DAL::disconnect();
+	
+	if ($annoucement != NULL)
+		return json_encode(array ("res" => "TRUE", "data" => $annoucement[0]));
+	return json_encode(array ("res" => "FALSE"));
+}
+
 ?>

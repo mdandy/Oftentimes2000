@@ -37,636 +37,645 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">Menu</li>
 							<li><a href="your_account.html">Your Account</a></li>
-							<li><a href="create_announcement.html">Create Announcement</a></li>
+							<li class="active"><a href="create_announcement.html">Create Announcement</a></li>
+							<li><a href="your_announcement.html">Your Announcements</a></li>
 						</ul>
 					</div>
+					
 				</div>
 				<div class="span9">
+					<div class="alert alert-info">
+						<h1>Welcome to Oftentimes2000!</h1>
+						<p>
+							You can create your announcement here.
+						</p>
+					</div>
+					
 					<h1>What type of service is it?</h1>
-				<select id="tos" onChange="format_announcement_form(this.selectedIndex)">
-					<option>Select type of service...</option>
-					<option value="advertisement">Advertisement</option>
-					<option value="psa">Public Service Announcement (PSA)</option>
-					<option value="event">Event</option>
-				</select>
+					<select id="tos" onChange="format_announcement_form(this.selectedIndex)">
+						<option>Select type of service...</option>
+						<option value="advertisement">Advertisement</option>
+						<option value="psa">Public Service Announcement (PSA)</option>
+						<option value="event">Event</option>
+					</select>
 
-				<div id="advertisement">
-					<br>
-					<form class="form-horizontal">
-						<fieldset>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Advertisement
-									Title</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Textarea -->
-								<label class="control-label">*Highlights</label>
-								<div class="controls">
-									<div class="textarea">
-										<textarea class=""> </textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Textarea -->
-								<label class="control-label">Fine Print</label>
-								<div class="controls">
-									<div class="textarea">
-										<textarea class=""> </textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Street
-									Address</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*City</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*State</label>
-								<div class="controls">
-									<select class="input-xlarge">
-										<option>Alabama</option>
-										<option>Alaska</option>
-										<option>Arizona</option>
-										<option>Arkansas</option>
-										<option>California</option>
-										<option>Colorado</option>
-										<option>Connecticut</option>
-										<option>Delaware</option>
-										<option>Florida</option>
-										<option>Georgia</option>
-										<option>Hawaii</option>
-										<option>Idaho</option>
-										<option>Illinois</option>
-										<option>Indiana</option>
-										<option>Iowa</option>
-										<option>Kansas</option>
-										<option>Kentucky</option>
-										<option>Louisiana</option>
-										<option>Maine</option>
-										<option>Maryland</option>
-										<option>Massachusetts</option>
-										<option>Michigan</option>
-										<option>Minnesota</option>
-										<option>Mississippi</option>
-										<option>Missouri</option>
-										<option>Montana</option>
-										<option>Nebraska</option>
-										<option>Nevada</option>
-										<option>New Hampshire</option>
-										<option>New Jersey</option>
-										<option>New Mexico</option>
-										<option>New York</option>
-										<option>North Carolina</option>
-										<option>North Dakota</option>
-										<option>Ohio</option>
-										<option>Oklahoma</option>
-										<option>Oregon</option>
-										<option>Pennsylvania</option>
-										<option>Rhode Island</option>
-										<option>South Carolina</option>
-										<option>South Dakota</option>
-										<option>Tennessee</option>
-										<option>Texas</option>
-										<option>Utah</option>
-										<option>Vermont</option>
-										<option>Virginia</option>
-										<option>Washington</option>
-										<option>West Virginia</option>
-										<option>Wisconsin</option>
-										<option>Wyoming</option>
-									</select>
-								</div>
-							</div>
-							
-							<div class="control-group">
+					<div id="advertisement">
+						<br>
+						<form class="form-horizontal">
+							<fieldset>
 	
-								<!-- Select Basic -->
-								<label class="control-label">*Zipcode</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Appended input-->
-								<label class="control-label">*Radius</label>
-								<div class="controls">
-									<div class="input-append">
-										<input class="span4" placeholder="" type="text"> <span
-											class="add-on">mi.</span>
-									</div>
-									<p class="muted">How far out do you want your ad to go?</p>
-								</div>
-
-							</div>
-
-							<div class="control-group">
-								<!-- Prepended text-->
-								<label class="control-label">Regular Price</label>
-								<div class="controls">
-									<div class="input-prepend">
-										<span class="add-on">$</span> <input class="span4"
-											placeholder="" id="prependedInput" type="text">
-									</div>
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Prepended text-->
-								<label class="control-label">Promotional Price</label>
-								<div class="controls">
-									<div class="input-prepend">
-										<span class="add-on">$</span> <input class="span4"
-											placeholder="" id="prependedInput" type="text">
-									</div>
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*From</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*To</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">Promo URL</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-							
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Category</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-									<p class="muted">e.g. #restaurant, #bars, #shopping</p>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<!-- Button -->
-								<div class="controls">
-									<button class="btn btn-primary">Submit</button>
-								</div>
-								<p><strong>* required</strong></p>
-							</div>
-
-						</fieldset>
-					</form>
-
-				</div>
-
-				<div id="public_service_announcement">
-					<form class="form-horizontal">
-						<fieldset>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Announcement
-									Title</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Textarea -->
-								<label class="control-label">*Highlights</label>
-								<div class="controls">
-									<div class="textarea">
-										<textarea class=""> </textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Street
-									Address</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*City</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*State</label>
-								<div class="controls">
-									<select class="input-xlarge">
-										<option>Alabama</option>
-										<option>Alaska</option>
-										<option>Arizona</option>
-										<option>Arkansas</option>
-										<option>California</option>
-										<option>Colorado</option>
-										<option>Connecticut</option>
-										<option>Delaware</option>
-										<option>Florida</option>
-										<option>Georgia</option>
-										<option>Hawaii</option>
-										<option>Idaho</option>
-										<option>Illinois</option>
-										<option>Indiana</option>
-										<option>Iowa</option>
-										<option>Kansas</option>
-										<option>Kentucky</option>
-										<option>Louisiana</option>
-										<option>Maine</option>
-										<option>Maryland</option>
-										<option>Massachusetts</option>
-										<option>Michigan</option>
-										<option>Minnesota</option>
-										<option>Mississippi</option>
-										<option>Missouri</option>
-										<option>Montana</option>
-										<option>Nebraska</option>
-										<option>Nevada</option>
-										<option>New Hampshire</option>
-										<option>New Jersey</option>
-										<option>New Mexico</option>
-										<option>New York</option>
-										<option>North Carolina</option>
-										<option>North Dakota</option>
-										<option>Ohio</option>
-										<option>Oklahoma</option>
-										<option>Oregon</option>
-										<option>Pennsylvania</option>
-										<option>Rhode Island</option>
-										<option>South Carolina</option>
-										<option>South Dakota</option>
-										<option>Tennessee</option>
-										<option>Texas</option>
-										<option>Utah</option>
-										<option>Vermont</option>
-										<option>Virginia</option>
-										<option>Washington</option>
-										<option>West Virginia</option>
-										<option>Wisconsin</option>
-										<option>Wyoming</option>
-									</select>
-								</div>
-
-							</div>
-							
-							<div class="control-group">
+								<div class="control-group">
 	
-								<!-- Select Basic -->
-								<label class="control-label">*Zipcode</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Appended input-->
-								<label class="control-label">*Radius</label>
-								<div class="controls">
-									<div class="input-append">
-										<input class="span4" placeholder="" type="text"> <span
-											class="add-on">mi.</span>
-									</div>
-									<p class="muted">How far out do you want your announcement
-										to go?</p>
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*From</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label"></label>
-								<div class="controls">
-									<input type="time" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*To</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label"></label>
-								<div class="controls">
-									<input type="time" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">Announcement
-									URL</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-							
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Category</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-									<p class="muted">e.g. #restaurant, #bars, #shopping</p>
-								</div>
-							</div>
-
-							<div class="control-group">
-								<!-- Button -->
-								<div class="controls">
-									<button class="btn btn-primary">Submit</button>
-								</div>
-								<p><strong>* required</strong></p>
-							</div>
-						</fieldset>
-					</form>
-				</div>
-
-				<div id="event">
-					<form class="form-horizontal">
-						<fieldset>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Event Title</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Textarea -->
-								<label class="control-label">*Highlights</label>
-								<div class="controls">
-									<div class="textarea">
-										<textarea class=""> </textarea>
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Advertisement
+										Title</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
 									</div>
 								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Street
-									Address</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*City</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*State</label>
-								<div class="controls">
-									<select class="input-xlarge">
-										<option>Alabama</option>
-										<option>Alaska</option>
-										<option>Arizona</option>
-										<option>Arkansas</option>
-										<option>California</option>
-										<option>Colorado</option>
-										<option>Connecticut</option>
-										<option>Delaware</option>
-										<option>Florida</option>
-										<option>Georgia</option>
-										<option>Hawaii</option>
-										<option>Idaho</option>
-										<option>Illinois</option>
-										<option>Indiana</option>
-										<option>Iowa</option>
-										<option>Kansas</option>
-										<option>Kentucky</option>
-										<option>Louisiana</option>
-										<option>Maine</option>
-										<option>Maryland</option>
-										<option>Massachusetts</option>
-										<option>Michigan</option>
-										<option>Minnesota</option>
-										<option>Mississippi</option>
-										<option>Missouri</option>
-										<option>Montana</option>
-										<option>Nebraska</option>
-										<option>Nevada</option>
-										<option>New Hampshire</option>
-										<option>New Jersey</option>
-										<option>New Mexico</option>
-										<option>New York</option>
-										<option>North Carolina</option>
-										<option>North Dakota</option>
-										<option>Ohio</option>
-										<option>Oklahoma</option>
-										<option>Oregon</option>
-										<option>Pennsylvania</option>
-										<option>Rhode Island</option>
-										<option>South Carolina</option>
-										<option>South Dakota</option>
-										<option>Tennessee</option>
-										<option>Texas</option>
-										<option>Utah</option>
-										<option>Vermont</option>
-										<option>Virginia</option>
-										<option>Washington</option>
-										<option>West Virginia</option>
-										<option>Wisconsin</option>
-										<option>Wyoming</option>
-									</select>
-								</div>
-
-							</div>
-							
-							<div class="control-group">
 	
-								<!-- Select Basic -->
-								<label class="control-label">*Zipcode</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Appended input-->
-								<label class="control-label">*Radius</label>
-								<div class="controls">
-									<div class="input-append">
-										<input class="span4" placeholder="" type="text"> <span
-											class="add-on">mi.</span>
+								<div class="control-group">
+	
+									<!-- Textarea -->
+									<label class="control-label">*Highlights</label>
+									<div class="controls">
+										<div class="textarea">
+											<textarea class=""> </textarea>
+										</div>
 									</div>
-									<p class="muted">How far out do you want your announcement
-										to go?</p>
 								</div>
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*From</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
+	
+								<div class="control-group">
+	
+									<!-- Textarea -->
+									<label class="control-label">Fine Print</label>
+									<div class="controls">
+										<div class="textarea">
+											<textarea class=""> </textarea>
+										</div>
+									</div>
 								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label"></label>
-								<div class="controls">
-									<input type="time" placeholder="" class="input-xlarge">
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Street
+										Address</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
 								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label">*To</label>
-								<div class="controls">
-									<input type="date" placeholder="" class="input-xlarge">
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*City</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
 								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Select Basic -->
-								<label class="control-label"></label>
-								<div class="controls">
-									<input type="time" placeholder="" class="input-xlarge">
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*State</label>
+									<div class="controls">
+										<select class="input-xlarge">
+											<option>Alabama</option>
+											<option>Alaska</option>
+											<option>Arizona</option>
+											<option>Arkansas</option>
+											<option>California</option>
+											<option>Colorado</option>
+											<option>Connecticut</option>
+											<option>Delaware</option>
+											<option>Florida</option>
+											<option>Georgia</option>
+											<option>Hawaii</option>
+											<option>Idaho</option>
+											<option>Illinois</option>
+											<option>Indiana</option>
+											<option>Iowa</option>
+											<option>Kansas</option>
+											<option>Kentucky</option>
+											<option>Louisiana</option>
+											<option>Maine</option>
+											<option>Maryland</option>
+											<option>Massachusetts</option>
+											<option>Michigan</option>
+											<option>Minnesota</option>
+											<option>Mississippi</option>
+											<option>Missouri</option>
+											<option>Montana</option>
+											<option>Nebraska</option>
+											<option>Nevada</option>
+											<option>New Hampshire</option>
+											<option>New Jersey</option>
+											<option>New Mexico</option>
+											<option>New York</option>
+											<option>North Carolina</option>
+											<option>North Dakota</option>
+											<option>Ohio</option>
+											<option>Oklahoma</option>
+											<option>Oregon</option>
+											<option>Pennsylvania</option>
+											<option>Rhode Island</option>
+											<option>South Carolina</option>
+											<option>South Dakota</option>
+											<option>Tennessee</option>
+											<option>Texas</option>
+											<option>Utah</option>
+											<option>Vermont</option>
+											<option>Virginia</option>
+											<option>Washington</option>
+											<option>West Virginia</option>
+											<option>Wisconsin</option>
+											<option>Wyoming</option>
+										</select>
+									</div>
 								</div>
-
-							</div>
-
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">Event URL</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
+								
+								<div class="control-group">
+		
+									<!-- Select Basic -->
+									<label class="control-label">*Zipcode</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
 								</div>
-							</div>
-							
-							<div class="control-group">
-
-								<!-- Text input-->
-								<label class="control-label" for="input01">*Category</label>
-								<div class="controls">
-									<input type="text" placeholder="" class="input-xlarge">
-									<p class="muted">e.g. #restaurant, #bars, #shopping</p>
+	
+								<div class="control-group">
+	
+									<!-- Appended input-->
+									<label class="control-label">*Radius</label>
+									<div class="controls">
+										<div class="input-append">
+											<input class="span4" placeholder="" type="text"> <span
+												class="add-on">mi.</span>
+										</div>
+										<p class="muted">How far out do you want your ad to go?</p>
+									</div>
+	
 								</div>
-							</div>
-
-							<div class="control-group">
-								<!-- Button -->
-								<div class="controls">
-									<button class="btn btn-primary">Submit</button>
+	
+								<div class="control-group">
+									<!-- Prepended text-->
+									<label class="control-label">Regular Price</label>
+									<div class="controls">
+										<div class="input-prepend">
+											<span class="add-on">$</span> <input class="span4"
+												placeholder="" id="prependedInput" type="text">
+										</div>
+									</div>
+	
 								</div>
-								<p><strong>* required</strong></p>
-							</div>
-						</fieldset>
-					</form>
-				</div>
+	
+								<div class="control-group">
+	
+									<!-- Prepended text-->
+									<label class="control-label">Promotional Price</label>
+									<div class="controls">
+										<div class="input-prepend">
+											<span class="add-on">$</span> <input class="span4"
+												placeholder="" id="prependedInput" type="text">
+										</div>
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*From</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*To</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">Promo URL</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+								
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Category</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+										<p class="muted">e.g. #restaurant, #bars, #shopping</p>
+									</div>
+								</div>
+	
+								<div class="control-group">
+									<!-- Button -->
+									<div class="controls">
+										<button class="btn btn-primary">Submit</button>
+									</div>
+									<p><strong>* required</strong></p>
+								</div>
+	
+							</fieldset>
+						</form>
+	
+					</div>
+
+					<div id="public_service_announcement">
+						<form class="form-horizontal">
+							<fieldset>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Announcement
+										Title</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Textarea -->
+									<label class="control-label">*Highlights</label>
+									<div class="controls">
+										<div class="textarea">
+											<textarea class=""> </textarea>
+										</div>
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Street
+										Address</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*City</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*State</label>
+									<div class="controls">
+										<select class="input-xlarge">
+											<option>Alabama</option>
+											<option>Alaska</option>
+											<option>Arizona</option>
+											<option>Arkansas</option>
+											<option>California</option>
+											<option>Colorado</option>
+											<option>Connecticut</option>
+											<option>Delaware</option>
+											<option>Florida</option>
+											<option>Georgia</option>
+											<option>Hawaii</option>
+											<option>Idaho</option>
+											<option>Illinois</option>
+											<option>Indiana</option>
+											<option>Iowa</option>
+											<option>Kansas</option>
+											<option>Kentucky</option>
+											<option>Louisiana</option>
+											<option>Maine</option>
+											<option>Maryland</option>
+											<option>Massachusetts</option>
+											<option>Michigan</option>
+											<option>Minnesota</option>
+											<option>Mississippi</option>
+											<option>Missouri</option>
+											<option>Montana</option>
+											<option>Nebraska</option>
+											<option>Nevada</option>
+											<option>New Hampshire</option>
+											<option>New Jersey</option>
+											<option>New Mexico</option>
+											<option>New York</option>
+											<option>North Carolina</option>
+											<option>North Dakota</option>
+											<option>Ohio</option>
+											<option>Oklahoma</option>
+											<option>Oregon</option>
+											<option>Pennsylvania</option>
+											<option>Rhode Island</option>
+											<option>South Carolina</option>
+											<option>South Dakota</option>
+											<option>Tennessee</option>
+											<option>Texas</option>
+											<option>Utah</option>
+											<option>Vermont</option>
+											<option>Virginia</option>
+											<option>Washington</option>
+											<option>West Virginia</option>
+											<option>Wisconsin</option>
+											<option>Wyoming</option>
+										</select>
+									</div>
+	
+								</div>
+								
+								<div class="control-group">
+		
+									<!-- Select Basic -->
+									<label class="control-label">*Zipcode</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Appended input-->
+									<label class="control-label">*Radius</label>
+									<div class="controls">
+										<div class="input-append">
+											<input class="span4" placeholder="" type="text"> <span
+												class="add-on">mi.</span>
+										</div>
+										<p class="muted">How far out do you want your announcement
+											to go?</p>
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*From</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label"></label>
+									<div class="controls">
+										<input type="time" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*To</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label"></label>
+									<div class="controls">
+										<input type="time" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">Announcement
+										URL</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+								
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Category</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+										<p class="muted">e.g. #restaurant, #bars, #shopping</p>
+									</div>
+								</div>
+	
+								<div class="control-group">
+									<!-- Button -->
+									<div class="controls">
+										<button class="btn btn-primary">Submit</button>
+									</div>
+									<p><strong>* required</strong></p>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+	
+					<div id="event">
+						<form class="form-horizontal">
+							<fieldset>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Event Title</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Textarea -->
+									<label class="control-label">*Highlights</label>
+									<div class="controls">
+										<div class="textarea">
+											<textarea class=""> </textarea>
+										</div>
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Street
+										Address</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*City</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*State</label>
+									<div class="controls">
+										<select class="input-xlarge">
+											<option>Alabama</option>
+											<option>Alaska</option>
+											<option>Arizona</option>
+											<option>Arkansas</option>
+											<option>California</option>
+											<option>Colorado</option>
+											<option>Connecticut</option>
+											<option>Delaware</option>
+											<option>Florida</option>
+											<option>Georgia</option>
+											<option>Hawaii</option>
+											<option>Idaho</option>
+											<option>Illinois</option>
+											<option>Indiana</option>
+											<option>Iowa</option>
+											<option>Kansas</option>
+											<option>Kentucky</option>
+											<option>Louisiana</option>
+											<option>Maine</option>
+											<option>Maryland</option>
+											<option>Massachusetts</option>
+											<option>Michigan</option>
+											<option>Minnesota</option>
+											<option>Mississippi</option>
+											<option>Missouri</option>
+											<option>Montana</option>
+											<option>Nebraska</option>
+											<option>Nevada</option>
+											<option>New Hampshire</option>
+											<option>New Jersey</option>
+											<option>New Mexico</option>
+											<option>New York</option>
+											<option>North Carolina</option>
+											<option>North Dakota</option>
+											<option>Ohio</option>
+											<option>Oklahoma</option>
+											<option>Oregon</option>
+											<option>Pennsylvania</option>
+											<option>Rhode Island</option>
+											<option>South Carolina</option>
+											<option>South Dakota</option>
+											<option>Tennessee</option>
+											<option>Texas</option>
+											<option>Utah</option>
+											<option>Vermont</option>
+											<option>Virginia</option>
+											<option>Washington</option>
+											<option>West Virginia</option>
+											<option>Wisconsin</option>
+											<option>Wyoming</option>
+										</select>
+									</div>
+	
+								</div>
+								
+								<div class="control-group">
+		
+									<!-- Select Basic -->
+									<label class="control-label">*Zipcode</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Appended input-->
+									<label class="control-label">*Radius</label>
+									<div class="controls">
+										<div class="input-append">
+											<input class="span4" placeholder="" type="text"> <span
+												class="add-on">mi.</span>
+										</div>
+										<p class="muted">How far out do you want your announcement
+											to go?</p>
+									</div>
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*From</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label"></label>
+									<div class="controls">
+										<input type="time" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label">*To</label>
+									<div class="controls">
+										<input type="date" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Select Basic -->
+									<label class="control-label"></label>
+									<div class="controls">
+										<input type="time" placeholder="" class="input-xlarge">
+									</div>
+	
+								</div>
+	
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">Event URL</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+									</div>
+								</div>
+								
+								<div class="control-group">
+	
+									<!-- Text input-->
+									<label class="control-label" for="input01">*Category</label>
+									<div class="controls">
+										<input type="text" placeholder="" class="input-xlarge">
+										<p class="muted">e.g. #restaurant, #bars, #shopping</p>
+									</div>
+								</div>
+	
+								<div class="control-group">
+									<!-- Button -->
+									<div class="controls">
+										<button class="btn btn-primary">Submit</button>
+									</div>
+									<p><strong>* required</strong></p>
+								</div>
+							</fieldset>
+						</form>
+					</div>
 			</div>
 		</div>
 	</div>

@@ -10,8 +10,7 @@ var AJAXManager =
 		var username = form.username.value;
 		var password = form.password.value;
 	
-		$.ajaxSetup (
-		{
+		$.ajaxSetup ({
 			cache: false
 		});
 
@@ -75,8 +74,7 @@ var AJAXManager =
 			return;
 		}
 	
-		$.ajaxSetup (
-		{
+		$.ajaxSetup ({
 			cache: false
 		});
 
@@ -137,8 +135,7 @@ var AJAXManager =
 			return;
 		}
 	
-		$.ajaxSetup (
-		{
+		$.ajaxSetup ({
 			cache: false
 		});
 
@@ -180,8 +177,7 @@ var AJAXManager =
 	{
 		var username = sessionStorage.username;
 		
-		$.ajaxSetup (
-		{
+		$.ajaxSetup ({
 			cache: true
 		});
 
@@ -196,6 +192,13 @@ var AJAXManager =
 			{
 				if (data.res == "TRUE")
 				{
+					// Save in the session storage
+					sessionStorage.street_address = data.street_address;
+					sessionStorage.city = data.city;
+					sessionStorage.state = data.state;
+					sessionStorage.zipcode = data.zipcode;
+					sessionStorage.website = data.website;
+					
 					callback(data.data);
 				}
 			},
@@ -228,8 +231,7 @@ var AJAXManager =
 			return;
 		}
 	
-		$.ajaxSetup (
-		{
+		$.ajaxSetup ({
 			cache: false
 		});
 
@@ -265,6 +267,80 @@ var AJAXManager =
 					template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
 					template += "<strong>Error!</strong> Unable to update your profile.</div>";
 					$("#profile_alert").append(template);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				console.error(textStatus);
+			}
+		});
+	},
+	
+	get_announcement: function (callback)
+	{
+		var username = sessionStorage.username;
+		
+		$.ajaxSetup ({
+			cache: true
+		});
+		var ajax_load = "<p><img src=\"image/ajax-loader.gif\" alt=\"loading...\" /></p>";
+		var loadUrl = AJAXManager.url + "announcement/" + username;
+	
+		$("#announcement_list_alert").html(ajax_load);
+		$.ajax ({
+			type: "GET",
+			url: loadUrl,
+			dataType: "json",
+			timeout: 5000, //5 seconds
+			success: function(data) 
+			{
+				$("#announcement_list_alert").empty();
+				if (data.res == "TRUE")
+				{
+					callback(data.data);
+				}
+				else
+				{
+					var template = "<div class='alert alert-block'>";
+					template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+					template += "<strong>Not found!</strong> You don't have any annoncement yet.</div>";
+					$("#announcement_list_alert").append(template);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) 
+			{
+				$("#announcement_list_alert").empty();
+				console.error(textStatus);
+			}
+		});
+	},
+	
+	delete_announcement: function (element)
+	{
+		var form = $(element).parent();
+		var id = $(form).find("input[name='announcement_id']").val();
+		
+		$.ajaxSetup ({
+			cache: false
+		});
+
+		var loadUrl = AJAXManager.url + "announcement/delete?id=" + id;
+	
+		$.ajax ({
+			type: "GET",
+			url: loadUrl,
+			dataType: "json",
+			timeout: 5000, //5 seconds
+			success: function(data) 
+			{
+				if (data.res == "TRUE")
+				{
+					$("#announcement" + id).remove();
+					
+					var template = "<div class='alert alert-success'>";
+					template += "<button type='button' class='close' data-dismiss='alert'>×</button>";
+					template += "<strong>Success!</strong> Your announcement has been deleted.</div>";
+					$("#announcement_list_alert").append(template);
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) 

@@ -84,3 +84,16 @@ header button.logout
 {
 	padding: 9px 0;
 }
+
+/**
+ * Announcement Listview
+ */
+.announcement_item
+{
+	margin-bottom: 20px;	
+}
+
+.annoucement_list_control button
+{
+	margin-right: 20px;	
+}

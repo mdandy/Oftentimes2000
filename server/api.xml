@@ -115,14 +115,24 @@
 				Get announcement
 			]]></description>
 			<action file='server/announcement.php'><![CDATA[
-				$username = $_REST['announcement'];
-				if (isset($_GET['type']))
+				$q = $_REST['announcement'];
+				
+				if (is_numeric($q))
+				{
+					echo get_announcement_by_id(intval($q));
+				}
+				else if (strcmp($q, 'delete') == 0)
+				{
+					$id = $_GET['id'];
+					echo delete_announcement($id);
+				}
+				else if (isset($_GET['type']))
 				{
 					$type = $_GET['type'];
-					echo get_announcement_by_type($username, $type);
+					echo get_announcement_by_type($q, $type);
 				}
 				else
-					echo get_announcement($username);
+					echo get_announcement($q);
 			]]></action>
 		</get>
 		

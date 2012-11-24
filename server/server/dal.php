@@ -260,5 +260,22 @@ class DAL
 		}
 		return NULL;
 	}
+	
+	public static function get_announcement_by_id($id)
+	{
+		try 
+		{
+			$sql = "SELECT * FROM oAdvertisements WHERE id=:id";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":id", $id, PDO::PARAM_INT);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
+	}
 }
 ?>
