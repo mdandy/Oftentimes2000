@@ -1,7 +1,6 @@
 package edu.gatech.oftentimes2000;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import edu.gatech.oftentimes2000.data.Announcement;
 import android.app.Activity;
