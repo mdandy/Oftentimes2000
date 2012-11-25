@@ -66,12 +66,12 @@ public class Announcement implements Parcelable
 	/**
 	 * The promotional URL
 	 */
-	public String url = "";
+	public String url;
 	
 	/**
 	 * The category
 	 */
-	public String category = "";
+	public String category;
 	
 	/**
 	 * Constructor
