@@ -10,4 +10,6 @@ define("DB_NAME", "");
 define("USERNAME", "");
 define("PASSWORD", "");
 
+define("GCM_API_KEY", "");
+
 ?>
