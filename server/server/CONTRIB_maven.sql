@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 25, 2012 at 03:14 PM
+-- Generation Time: Nov 25, 2012 at 06:55 PM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
   `state` varchar(64) NOT NULL,
   `zipcode` varchar(64) NOT NULL,
   `radius` int(11) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
+  `latitude` int(11) NOT NULL,
+  `longitude` int(11) NOT NULL,
   `regular_price` float DEFAULT NULL,
   `promotional_price` float DEFAULT NULL,
   `from_date` datetime NOT NULL,
@@ -59,10 +59,11 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
 CREATE TABLE IF NOT EXISTS `oDevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `gcm_id` varchar(512) NOT NULL,
-  `latitude` double NULL,
-  `longitude` double NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `latitude` int(11) DEFAULT NULL,
+  `longitude` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `gcm_id` (`gcm_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -78,11 +79,15 @@ CREATE TABLE IF NOT EXISTS `oUsers` (
   `city` varchar(64) NOT NULL,
   `state` varchar(64) NOT NULL,
   `zipcode` varchar(64) NOT NULL,
-  `website` varchar(64) NULL,
+  `website` varchar(64) DEFAULT NULL,
   `email` varchar(64) NOT NULL,
   `about` varchar(4096) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Constraints for dumped tables
+--
 
 --
 -- Constraints for table `oAdvertisements`

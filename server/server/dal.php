@@ -170,8 +170,8 @@ class DAL
 			$query->bindParam(":state", $state, PDO::PARAM_STR, 64);
 			$query->bindParam(":zipcode", $zipcode, PDO::PARAM_STR, 64);
 			$query->bindParam(":radius", $radius, PDO::PARAM_INT);
-			$query->bindParam(":latitude", $latitude);
-			$query->bindParam(":longitude", $longitude);
+			$query->bindParam(":latitude", $latitude, PDO::PARAM_INT);
+			$query->bindParam(":longitude", $longitude, PDO::PARAM_INT);
 			$query->bindParam(":regular_price", $regular_price);
 			$query->bindParam(":promotional_price", $promotional_price);
 			$query->bindParam(":from", $from);
@@ -215,8 +215,8 @@ class DAL
 			$query->bindParam(":u_state", $state, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_zipcode", $zipcode, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_radius", $radius, PDO::PARAM_INT);
-			$query->bindParam(":u_latitude", $latitude);
-			$query->bindParam(":u_longitude", $longitude);
+			$query->bindParam(":u_latitude", $latitude, PDO::PARAM_INT);
+			$query->bindParam(":u_longitude", $longitude, PDO::PARAM_INT);
 			$query->bindParam(":u_regular_price", $regular_price);
 			$query->bindParam(":u_promotional_price", $promotional_price);
 			$query->bindParam(":u_from", $from);
@@ -313,22 +313,103 @@ class DAL
 		return NULL;
 	}
 	
+	public static function get_announcement_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude)
+	{
+		try 
+		{	
+			$sql = "SELECT * FROM oAdvertisements WHERE";
+			$sql .= " latitude BETWEEN :from_latitude AND :to_latitude AND";
+			$sql .= " longitude BETWEEN :from_longitude AND :to_longitude";
+			
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":from_latitude", $from_latitude, PDO::PARAM_INT);
+			$query->bindParam(":to_latitude", $to_latitude, PDO::PARAM_INT);
+			$query->bindParam(":from_longitude", $from_longitude, PDO::PARAM_INT);
+			$query->bindParam(":to_longitude", $to_longitude, PDO::PARAM_INT);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
+	}
+	
 	/**
 	 * DEVICES
 	 */
 	public static function register_device($gcm_id)
 	{
-		
+		try 
+		{
+			$sql = "INSERT INTO oDevices (gcm_id) VALUES (:gcm_id)";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			//echo ("Error: " . $e->getMessage());
+		}
+		return false;
 	}
 	
 	public static function unregister_device($gcm_id)
 	{
-		
+		try 
+		{
+			$sql = "DELETE FROM oDevices WHERE gcm_id=:gcm_id";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return false;
 	}
 	
-	public static function update_location($gcm_id)
+	public static function is_device_registered($gcm_id)
 	{
-		
+		try 
+		{
+			$sql = "SELECT COUNT(*) FROM oDevices WHERE gcm_id=:gcm_id";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			$query->execute();
+			if($query->fetchColumn() > 0)
+				return true;
+			return false;
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return false;
+	}
+	
+	public static function update_device_location($gcm_id, $latitude, $longitude)
+	{
+		try 
+		{
+			$sql = "UPDATE oDevices SET";
+			$sql .= " latitude=:latitude, ";
+			$sql .= " longitude=:longitude";
+			$sql .= " WHERE gcm_id=:gcm_id";
+			
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			$query->bindParam(":latitude", $latitude, PDO::PARAM_INT);
+			$query->bindParam(":longitude", $longitude, PDO::PARAM_INT);
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return false;
 	}
 }
 ?>
