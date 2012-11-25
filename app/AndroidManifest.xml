@@ -39,6 +39,11 @@
         </activity>
         
         <activity
+            android:name=".AnnouncementDetail"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
             android:name=".map.MainActivity"
             android:label="@string/app_name" >
         </activity>

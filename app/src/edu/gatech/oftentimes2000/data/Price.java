@@ -25,8 +25,8 @@ public class Price implements Parcelable
 	 */
 	public Price()
 	{
-		this.originalPrice = 0.0;
-		this.promotionalPrice = 0.0;
+		this.originalPrice = -1.0;
+		this.promotionalPrice = -1.0;
 		this.discount = 0;
 	}
 	
@@ -55,7 +55,7 @@ public class Price implements Parcelable
 	 */
 	public String getOriginalPrice()
 	{
-		return String.format("%.2f", this.originalPrice);
+		return String.format("$%.2f", this.originalPrice);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class Price implements Parcelable
 	 */
 	public String getPromotionalPrice()
 	{
-		return String.format("%.2f", this.promotionalPrice);
+		return String.format("$%.2f", this.promotionalPrice);
 	}
 	
 	/**

@@ -15,5 +15,18 @@
     <string name="map_it">Map It!</string>
     <string name="placeholder">placeholder</string>
     <string name="nothing">There is nothing here :(</string>
+    <string name="highlights">Highlights</string>
+    <string name="fineprint">Fine Print</string>
+    <string name="about">About This Deal</string>
+    <string name="location">Location</string>
+    <string name="title">Title</string>
+    <string name="price">$0.00</string>
+    <string name="discount">0%</string>
+    <string name="creator">Creator</string>
+    <string name="phone">123-456-7890</string>
+    <string name="url">URL</string>
+    <string name="date">Date</string>
+    <string name="from_date">From:</string>
+    <string name="to_date">To:</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-public class AnnouncementSelection extends Activity implements OnItemClickListener
+public class AnnouncementSelection extends Activity implements OnItemClickListener, OnClickListener
 {
 	private final String TAG = "AnnouncementSelection";
 	
@@ -37,15 +38,16 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 		// Init content manager
 		this.contentManager = ContentManager.getInstance();
 
-		// Get intent extra
-		Intent intent = getIntent();
-		String category = intent.getStringExtra("category");
-		
 		// Init views
 		this.bMapIt = (Button) findViewById(R.id.bMapIt);
+		this.bMapIt.setOnClickListener(this);
 		this.pbLoading = (ProgressBar) findViewById(R.id.pbAnnouncementLoading);
 		this.lvAnnouncements = (ListView) findViewById(R.id.lvAnnouncement);
 		this.tvNothing = (TextView) findViewById(R.id.tvAnnouncementNothing);
+
+		// Get intent extra
+		Intent intent = getIntent();
+		String category = intent.getStringExtra("category");
 		
 		// Loading
 		this.tvNothing.setVisibility(View.GONE);
@@ -56,7 +58,22 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 	{
-		// TODO Auto-generated method stub
+		Announcement announcement = (Announcement) this.lvAnnouncements.getItemAtPosition(position);
+		
+		Intent intent = new Intent (this, AnnouncementDetail.class);
+		intent.putExtra("announcement", announcement);
+		startActivity(intent);
+	}
+	
+	@Override
+	public void onClick(View v) 
+	{
+		switch (v.getId())
+		{
+			case R.id.bMapIt: 
+				// TODO: map it
+				break;
+		}
 	}
 	
 	private void fetch(String category)
