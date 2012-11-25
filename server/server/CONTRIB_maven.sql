@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
 CREATE TABLE IF NOT EXISTS `oDevices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `gcm_id` varchar(512) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
+  `latitude` double NULL,
+  `longitude` double NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `oUsers` (
   `city` varchar(64) NOT NULL,
   `state` varchar(64) NOT NULL,
   `zipcode` varchar(64) NOT NULL,
-  `website` varchar(64) NOT NULL,
+  `website` varchar(64) NULL,
   `email` varchar(64) NOT NULL,
   `about` varchar(4096) NOT NULL,
   PRIMARY KEY (`username`)
