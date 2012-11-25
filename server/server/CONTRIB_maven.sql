@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 23, 2012 at 03:02 PM
+-- Generation Time: Nov 25, 2012 at 03:14 PM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -48,7 +48,21 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
   `category` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`,`username`),
   KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oDevices`
+--
+
+CREATE TABLE IF NOT EXISTS `oDevices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gcm_id` varchar(512) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -69,10 +83,6 @@ CREATE TABLE IF NOT EXISTS `oUsers` (
   `about` varchar(4096) NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Constraints for dumped tables
---
 
 --
 -- Constraints for table `oAdvertisements`
