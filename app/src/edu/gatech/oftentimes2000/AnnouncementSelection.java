@@ -22,6 +22,7 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 {
 	private final String TAG = "AnnouncementSelection";
 	
+	private Announcement[] announcements;
 	private Button bMapIt;
 	private ProgressBar pbLoading;
 	private TextView tvNothing;
@@ -106,6 +107,8 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 		}
 		else
 		{
+			this.announcements = announcements;
+			
 			// Init array adapter
 			ArrayAdapter<Announcement> adapter = new AnnouncementAdapter(this, announcements);
 			
