@@ -312,5 +312,23 @@ class DAL
 		}
 		return NULL;
 	}
+	
+	/**
+	 * DEVICES
+	 */
+	public static function register_device($gcm_id)
+	{
+		
+	}
+	
+	public static function unregister_device($gcm_id)
+	{
+		
+	}
+	
+	public static function update_location($gcm_id)
+	{
+		
+	}
 }
 ?>

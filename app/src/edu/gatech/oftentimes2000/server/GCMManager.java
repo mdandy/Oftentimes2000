@@ -18,6 +18,7 @@ public class GCMManager
 		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean("gcm_supported", true);
+		editor.putString("gcm_id", registrationId);
 		editor.commit();
 	}
 	
@@ -27,6 +28,7 @@ public class GCMManager
 		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putBoolean("gcm_supported", false);
+		editor.putString("gcm_id", "");
 		editor.commit();
 	}
 	
