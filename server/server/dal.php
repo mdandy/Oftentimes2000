@@ -252,7 +252,7 @@ class DAL
 	{
 		try 
 		{
-			$sql = "SELECT * FROM oAdvertisements WHERE username=:username ORDER BY type ASC";
+			$sql = "SELECT * FROM oAdvertisements WHERE username=:username ORDER BY type ASC LIMIT 20";
 			$query = self::$dbh->prepare($sql);
 			$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
 			$query->execute();
@@ -274,13 +274,13 @@ class DAL
 			
 			if (strlen($username) == 0)
 			{
-				$sql = "SELECT * FROM oAdvertisements WHERE type=:type";
+				$sql = "SELECT * FROM oAdvertisements WHERE type=:type LIMIT 20";
 				$query = self::$dbh->prepare($sql);
 				$query->bindParam(":type", $type, PDO::PARAM_INT);
 			}
 			else
 			{
-				$sql = "SELECT * FROM oAdvertisements WHERE username=:username AND type=:type";
+				$sql = "SELECT * FROM oAdvertisements WHERE username=:username AND type=:type  LIMIT 20";
 				$query = self::$dbh->prepare($sql);
 				$query->bindParam(":username", $username, PDO::PARAM_STR, 64);
 				$query->bindParam(":type", $type, PDO::PARAM_INT);
