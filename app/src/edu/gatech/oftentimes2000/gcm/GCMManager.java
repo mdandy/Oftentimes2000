@@ -120,7 +120,7 @@ public class GCMManager
 		// Gather required params
 		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
 		String gcmId = settings.getString("gcm_id", ""); 
-		GeoPoint gp = GPSManager.getCurrentLocation();
+		GeoPoint gp = GPSManager.getCurrentLocation(appContext);
 		int latitude = gp.getLatitudeE6();
 		int longitude = gp.getLongitudeE6();
 		int radius = 0;

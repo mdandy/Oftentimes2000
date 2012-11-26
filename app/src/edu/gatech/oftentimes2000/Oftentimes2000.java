@@ -1,7 +1,12 @@
 package edu.gatech.oftentimes2000;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -157,7 +162,7 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnI
 		@Override
 		protected Announcement[] doInBackground(Void... params) 
 		{
-			GeoPoint gp = GPSManager.getCurrentLocation();
+			GeoPoint gp = GPSManager.getCurrentLocation(Oftentimes2000.this);
 			int latitude = gp.getLatitudeE6();
 			int longitude = gp.getLongitudeE6();
 			int radius = 0;
