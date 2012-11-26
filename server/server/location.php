@@ -17,10 +17,6 @@ function ping_server($gcm_id, $latitude, $longitude)
 		$contentText  = "content body";
 		sendNotification(GCM_API_KEY, array($gcm_id) , array('message' => $message, 'tickerText' => $tickerText, 'contentTitle' => $contentTitle, "contentText" => $contentText));
 	}
-	else
-	{
-		$res = "FALSE";
-	}
 	return json_encode($res);
 }
 
@@ -66,7 +62,7 @@ function convert_miles_to_degrees($radius) {
 
 function sendNotification( $apiKey, $registrationIdsArray, $messageData )
 {   
-    $headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
+    /*$headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
     $data = array(
         'data' => $messageData,
         'registration_ids' => $registrationIdsArray
@@ -84,7 +80,7 @@ function sendNotification( $apiKey, $registrationIdsArray, $messageData )
     $response = curl_exec($ch);
     curl_close($ch);
  
-    return $response;
+    return $response;*/
 }
 
 ?>
