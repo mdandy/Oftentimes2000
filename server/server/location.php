@@ -38,15 +38,6 @@ function get_announcement_by_location($latitude, $longitude, $radius=0)
 	$from_longitude = $longitude - ($add * ($r*2));
   $to_longitude = $longitude + ($add * ($r*2));
 
-  echo $from_latitude;
-  echo "\n";
-  echo $to_latitude;
-  echo "\n";  
-  echo $from_longitude;
-  echo "\n";  
-  echo $to_longitude;
-  echo "\n";  
-
 	$announcements = DAL::get_announcement_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude);
 	DAL::disconnect();
 
