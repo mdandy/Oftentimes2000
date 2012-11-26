@@ -48,31 +48,16 @@ public class ContentManager
 			if (status.equals("TRUE"))
 			{
 				JSONArray data = results.getJSONArray("data");
-				
 				Announcement[] announcements = new Announcement[data.length()];
 				for (int i = 0; i < data.length(); i++)
 				{
 					// Parse data
 					JSONObject datum = data.getJSONObject(i);
-					Announcement announcement = new Announcement();
-					
-					announcement.id = datum.getInt("id");
-					announcement.creator = getProfile(datum.getString("username"));
-					announcement.title = datum.getString("title");
-					announcement.type = getAnnouncementType(datum);
-					announcement.highlights = datum.getString("highlights");
-					announcement.finePrint = datum.getString("fine_print");
-					announcement.address = getAddress(datum);
-					announcement.price = getPrice(datum);
-					announcement.fromDate = getDate(datum.getString("from_date"));
-					announcement.toDate = getDate(datum.getString("to_date"));
-					announcement.url = datum.getString("url");
-					announcement.category = datum.getString("category");
+					Announcement announcement = parseAnnouncement(datum);
 					
 					// Store it in the announcement array
 					announcements[i] = announcement;
 				}
-				
 				return announcements;
 			}
 		} 
@@ -86,13 +71,69 @@ public class ContentManager
 	
 	public Announcement[] getAnncouncementsByUser(String username)
 	{
-		
 		return null;
 	}
 	
 	public Announcement[] getAnncouncementsByUser(String username, String type)
 	{
 		return null;
+	}
+	
+	public Announcement[] getAnncouncementsByLocation(int latitude, int longitude, int radius)
+	{
+		HttpResponse response = HTTPUtil.doGet(URL + "location?latitude=" + latitude + "&longitude=" + longitude + "&radius=" + radius);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		
+		try 
+		{
+			String status = results.getString("res");
+			if (status.equals("TRUE"))
+			{
+				JSONArray data = results.getJSONArray("data");
+				Announcement[] announcements = new Announcement[data.length()];
+				for (int i = 0; i < data.length(); i++)
+				{
+					// Parse data
+					JSONObject datum = data.getJSONObject(i);
+					Announcement announcement = parseAnnouncement(datum);
+					
+					// Store it in the announcement array
+					announcements[i] = announcement;
+				}
+				return announcements;
+			}
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
+		
+		return new Announcement[0];
+	}
+	
+	private Announcement parseAnnouncement(JSONObject datum)
+	{
+		Announcement announcement = new Announcement();
+		try
+		{
+			announcement.id = datum.getInt("id");
+			announcement.creator = getProfile(datum.getString("username"));
+			announcement.title = datum.getString("title");
+			announcement.type = getAnnouncementType(datum);
+			announcement.highlights = datum.getString("highlights");
+			announcement.finePrint = datum.getString("fine_print");
+			announcement.address = getAddress(datum);
+			announcement.price = getPrice(datum);
+			announcement.fromDate = getDate(datum.getString("from_date"));
+			announcement.toDate = getDate(datum.getString("to_date"));
+			announcement.url = datum.getString("url");
+			announcement.category = datum.getString("category");
+		}
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
+		return announcement;
 	}
 	
 	public Profile getProfile(String username)
