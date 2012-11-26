@@ -9,13 +9,17 @@ function ping_server($gcm_id, $latitude, $longitude)
 	DAL::disconnect();
 	
 	$res = get_announcement_by_location($latitude, $longitude, 10);
-	if($res == TRUE)
+	if($res)
 	{
 		$message = $res;
 		$tickerText   = "ticker text message";
 		$contentTitle = "content title";
 		$contentText  = "content body";
 		sendNotification(GCM_API_KEY, array($gcm_id) , array('message' => $message, 'tickerText' => $tickerText, 'contentTitle' => $contentTitle, "contentText" => $contentText));
+	}
+	else
+	{
+		$res = "FALSE";
 	}
 	return json_encode($res);
 }
