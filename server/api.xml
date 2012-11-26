@@ -188,7 +188,7 @@
 				$gcm_id = $_POST['gcm_id'];
 				$latitude = $_POST['latitude'];
 				$longitude = $_POST['longitude'];
-				echo get_announcement_by_location($gcm_id, $latitude, $longitude);
+				echo ping_server($gcm_id, $latitude, $longitude);
 			]]></action>
 		</post>
 	</command>
