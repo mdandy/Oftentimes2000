@@ -1,21 +1,45 @@
 package edu.gatech.oftentimes2000.data;
 
-public class Price 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Price implements Parcelable
 {
 	/**
 	 * The original price
 	 */
-	public float originalPrice;
+	public double originalPrice;
 	
 	/**
 	 * The promotional price
 	 */
-	public float promotionalPrice;
+	public double promotionalPrice;
 	
 	/**
-	 * The discount in percentaage
+	 * The discount in percentage
 	 */
 	public int discount;
+	
+	/**
+	 * Constructor
+	 */
+	public Price()
+	{
+		this.originalPrice = -1.0;
+		this.promotionalPrice = -1.0;
+		this.discount = 0;
+	}
+	
+	/**
+	 * Parcelable constructor
+	 * @param in the parcel
+	 */
+	public Price(Parcel in)
+	{
+		this.originalPrice = in.readDouble();
+		this.promotionalPrice = in.readDouble();
+		this.discount = in.readInt();
+	}
 	
 	/**
 	 * Calculate the discount
@@ -31,7 +55,7 @@ public class Price
 	 */
 	public String getOriginalPrice()
 	{
-		return String.format("%.2f", this.originalPrice);
+		return String.format("$%.2f", this.originalPrice);
 	}
 	
 	/**
@@ -40,7 +64,7 @@ public class Price
 	 */
 	public String getPromotionalPrice()
 	{
-		return String.format("%.2f", this.promotionalPrice);
+		return String.format("$%.2f", this.promotionalPrice);
 	}
 	
 	/**
@@ -51,4 +75,31 @@ public class Price
 	{
 		return this.discount + "%";
 	}
+
+	@Override
+	public int describeContents() 
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) 
+	{
+		dest.writeDouble(this.originalPrice);
+		dest.writeDouble(this.promotionalPrice);
+		dest.writeInt(this.discount);
+	}
+	
+	public static final Parcelable.Creator<Price> CREATOR = new Parcelable.Creator<Price>()
+	{
+		public Price createFromParcel(Parcel in) 
+		{
+			return new Price(in);
+		}
+
+		public Price[] newArray(int size) 
+		{
+			return new Price[size];
+		}
+	};
 }

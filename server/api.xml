@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<api>
+	<description>
+		<![CDATA[This is an API to interact with Oftentimes2000 system]]>
+	</description>
+	
+	<command id='login' security='public'>
+		<description><![CDATA[This API lets you to sign in a user]]></description>
+		
+		<post>
+			<description><![CDATA[
+				User login
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				$username = $_POST['username'];
+				$password = $_POST['password'];
+				echo login($username, $password);
+			]]></action>
+		</post>
+	</command>
+	
+	<command id='user' security='public'>
+		<description><![CDATA[This API lets you to get information about user]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Create / update user account information
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				$q = $_REST['user'];
+				if (strcmp($q, "account") == 0)
+				{
+					$username = $_POST['username'];
+					$password = $_POST['password'];
+					echo update_user_account($username, $password);
+				}
+				else if (strcmp($q, "profile") == 0)
+				{
+					$username = $_POST['username'];
+					$name = $_POST['name'];
+					$street_address = $_POST['street_address'];
+					$city = $_POST['city'];
+					$state = $_POST['state'];
+					$zipcode = $_POST['zipcode'];
+					$website = $_POST['website'];
+					$email = $_POST['email'];
+					$about = $_POST['about'];
+					echo update_user_profile($username, $name, $street_address, $city, 
+							 				 $state, $zipcode, $website, $email, $about);
+				}
+			]]></action>
+		</post>
+		
+		<get>
+			<description><![CDATA[
+				Retrieve user account information
+			]]></description>
+			<action file='server/user.php'><![CDATA[
+				$username = $_REST['user'];
+				echo get_user_profile($username);
+			]]></action>
+		</get>
+	</command>
+	
+	<command id='announcement' security='public'>
+		<description><![CDATA[This API lets you to create and retrieve announcement]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Create / update announcement
+			]]></description>
+			<action file='server/announcement.php'><![CDATA[
+				$type = $_REST['announcement'];
+				$id = intval($_POST['id']);
+				$username = $_POST['username'];
+				$title = $_POST['title'];
+				$highlights = $_POST['highlights'];
+				$street_address = $_POST['street_address'];
+				$city = $_POST['city'];
+				$state = $_POST['state'];
+				$zipcode = $_POST['zipcode'];
+				$radius = $_POST['radius'];
+				$from = $_POST['from'];
+				$to = $_POST['to'];
+				$url = $_POST['url'];
+				$category = $_POST['category'];
+				
+				if (strcmp($type, "advertisement") == 0)
+				{
+					$fine_print = $_POST['fine_print'];
+					$regular_price = $_POST['regular_price'];
+					$promotional_price = $_POST['promotional_price'];
+					
+					echo upsert_advertisement($id, $username, $title, $highlights, $fine_print, 
+							  				  $street_address, $city, $state, $zipcode, $radius,
+							  				  $regular_price, $promotional_price, 
+							  				  $from, $to, $url, $category);
+				}
+				else if (strcmp($type, "psa") == 0)
+				{
+					echo upsert_psa($id, $username, $title, $highlights, 
+									$street_address, $city, $state, $zipcode, $radius,
+									$from, $to, $url, $category);
+				}
+				else if (strcmp($type, "event") == 0)
+				{
+					echo upsert_event($id, $username, $title, $highlights,
+					  				  $street_address, $city, $state, $zipcode, $radius,
+					  				  $from, $to, $url, $category);
+				}
+			]]></action>
+		</post>
+		
+		<get>
+			<description><![CDATA[
+				Get announcement
+			]]></description>
+			<action file='server/announcement.php'><![CDATA[
+				$q = $_REST['announcement'];
+				
+				if (is_numeric($q))
+				{
+					echo get_announcement_by_id(intval($q));
+				}
+				else if (strcmp($q, 'delete') == 0)
+				{
+					$id = $_GET['id'];
+					echo delete_announcement($id);
+				}
+				else if (strcmp($q, 'all') == 0)
+				{
+					$type = $_GET['type'];
+					echo get_announcement_by_type("", $type);
+				}
+				else if (isset($_GET['type']))
+				{
+					$type = $_GET['type'];
+					echo get_announcement_by_type($q, $type);
+				}
+				else
+					echo get_announcement($q);
+			]]></action>
+		</get>
+		
+		<delete>
+			<description><![CDATA[
+				Delete announcement
+			]]></description>
+			<action file='server/announcement.php'><![CDATA[
+				$id = $_REST['announcement'];
+				echo delete_announcement($id);
+			]]></action>
+		</delete>
+	</command>
+	
+	<command id='device' security='public'>
+		<description><![CDATA[This API lets you to interact device client]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Register / unregister device, also update its location
+			]]></description>
+			<action file='server/device.php'><![CDATA[
+				$q = $_REST['device'];
+				$gcm_id = $_POST['gcm_id'];
+				if (strcmp($q, 'register') == 0)
+					echo register_device($gcm_id);
+				else if (strcmp($q, 'unregister') == 0)
+					echo unregister_device($gcm_id);
+				else if (strcmp($q, 'update') == 0)
+				{
+					$latitude = $_POST['latitude'];
+					$longitude = $_POST['longitude'];
+					echo update_device_location($gcm_id, $latitude, $longitude);
+				}
+			]]></action>
+		</post>
+	</command>
+	
+	<command id='location' security='public'>
+		<description><![CDATA[This API lets you to interact with the system based on location]]></description>
+		
+		<index>
+			<description><![CDATA[
+				Get announcement by location
+			]]></description>
+			<action file='server/location.php'><![CDATA[
+				$latitude = $_GET['latitude'];
+				$longitude = $_GET['longitude'];
+				$radius = $_GET['radius'];
+				echo get_announcement_by_location($latitude, $longitude, $radius);
+			]]></action>
+		</index>
+		
+		<post>
+			<description><![CDATA[
+				Update device location
+			]]></description>
+			<action file='server/location.php'><![CDATA[
+				$gcm_id = $_POST['gcm_id'];
+				$latitude = $_POST['latitude'];
+				$longitude = $_POST['longitude'];
+				echo ping_server($gcm_id, $latitude, $longitude);
+			]]></action>
+		</post>
+	</command>
+</api>
