@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
-import edu.gatech.oftentimes2000.server.GCMManager;
+import edu.gatech.oftentimes2000.gcm.GCMManager;
 
 public class GCMIntentService extends GCMBaseIntentService
 {

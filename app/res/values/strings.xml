@@ -35,5 +35,6 @@
     <string name="push_notification_desc">This requires GCM</string>
     <string name="ping_interval_enable">Enable server ping</string>
     <string name="ping_interval_desc">This requires GPS</string>
+    <string name="ping_server">Ping Server</string>
 
 </resources>

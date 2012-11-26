@@ -1,27 +1,32 @@
 package edu.gatech.oftentimes2000;
 
-import edu.gatech.oftentimes2000.server.GCMManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import edu.gatech.oftentimes2000.gcm.GCMManager;
 
 public class Settings extends Activity implements OnClickListener, OnItemSelectedListener
 {
 	public static final String SETTING_PREFERENCE = "Oftentimes2000Pref";
+	private final String TAG = "Settings";
 	
 	private CheckBox cbPushNotificationEnable;
 	private CheckBox cbPingIntervalEnable;
 	private TextView tvPingInterval;
 	private Spinner spPingInterval;
+	private ServerPinger pinger;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
@@ -45,6 +50,9 @@ public class Settings extends Activity implements OnClickListener, OnItemSelecte
 		this.spPingInterval.setAdapter(adapter);
 		this.spPingInterval.setOnItemSelectedListener(this);
 		this.spPingInterval.setVisibility(View.GONE);
+		
+		Button bPingServer = (Button) findViewById(R.id.bPingServer);
+		bPingServer.setOnClickListener(this);
 		
 		// Init SharedPreferences
 		SharedPreferences settings = getSharedPreferences(SETTING_PREFERENCE, Context.MODE_PRIVATE);
@@ -83,6 +91,24 @@ public class Settings extends Activity implements OnClickListener, OnItemSelecte
 					this.spPingInterval.setVisibility(View.GONE);
 				}
 				break;
+			case R.id.bPingServer:
+				try
+				{
+					if (this.pinger == null || this.pinger.getStatus() == AsyncTask.Status.FINISHED)
+					{
+						this.pinger = this.new ServerPinger();
+						this.pinger.execute();
+					}
+					else
+					{
+						Log.d(TAG, "An existing announcement fetcher is running!");
+					}
+				}
+				catch (Exception e)
+				{
+					Log.e(TAG, e.getMessage());
+				}
+				break;
 		}
 		
 		// Commit SharedPreferences
@@ -103,5 +129,15 @@ public class Settings extends Activity implements OnClickListener, OnItemSelecte
 	public void onNothingSelected(AdapterView<?> parent) 
 	{
 		// NOP
+	}
+	
+	public class ServerPinger extends AsyncTask<Void, Void, Void>
+	{
+		@Override
+		protected Void doInBackground(Void... params) 
+		{
+			GCMManager.pingServer(Settings.this);
+			return null;
+		}
 	}
 }

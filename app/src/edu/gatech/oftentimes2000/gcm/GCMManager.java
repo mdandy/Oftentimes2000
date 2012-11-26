@@ -1,4 +1,4 @@
-package edu.gatech.oftentimes2000.server;
+package edu.gatech.oftentimes2000.gcm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,15 @@ import org.json.JSONObject;
 
 import com.google.android.gcm.GCMRegistrar;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import edu.gatech.oftentimes2000.Oftentimes2000;
 import edu.gatech.oftentimes2000.Settings;
+import edu.gatech.oftentimes2000.server.ContentManager;
+import edu.gatech.oftentimes2000.server.HTTPUtil;
 
 public class GCMManager 
 {
@@ -104,5 +109,34 @@ public class GCMManager
 	{
 		Context appContext = context.getApplicationContext();
 		GCMRegistrar.unregister(appContext);
+	}
+	
+	public static void pingServer(Context context)
+	{
+		Context appContext = context.getApplicationContext();
+		
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		String gcmId = settings.getString("gcm_id", ""); 
+		int latitude = 0;
+		int longitude = 0;
+		
+		Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
+		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+		params.add(new BasicNameValuePair("gcm_id", gcmId));
+		params.add(new BasicNameValuePair("latitude", "" + latitude));
+		params.add(new BasicNameValuePair("longitude", "" + longitude));
+		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "location", params);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		try 
+		{
+			String status = results.getString("res");
+			Intent intent = new Intent(appContext, Oftentimes2000.class);
+		    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, intent, 0);
+		    NotificationCenter.createNotification(appContext, pIntent, "Ping Server :" + status);
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
 	}
 }

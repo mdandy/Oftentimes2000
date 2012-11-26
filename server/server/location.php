@@ -2,7 +2,7 @@
 
 require_once("dal.php");
 
-function get_announcement_by_location($latitude, $longitude, $radius=0)
+function get_announcement_by_location($gcm_id, $latitude, $longitude)
 {
 	DAL::connect();
 	
@@ -16,7 +16,7 @@ function get_announcement_by_location($latitude, $longitude, $radius=0)
 	DAL::disconnect();
 	
 	if ($announcements != NULL)
-		return json_encode(array ("res" => "TRUE", "data" => $announcements));
+		return json_encode(array ("res" => "TRUE", "id" => $gcm_id, "data" => $announcements));
 	return json_encode(array ("res" => "FALSE"));
 }
 

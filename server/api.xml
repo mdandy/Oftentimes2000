@@ -180,16 +180,16 @@
 	<command id='location' security='public'>
 		<description><![CDATA[This API lets you to interact with the system based on location]]></description>
 		
-		<index>
+		<post>
 			<description><![CDATA[
 				Get announcement by location
 			]]></description>
 			<action file='server/location.php'><![CDATA[
-				$latitude = $_GET['latitude'];
-				$longitude = $_GET['longitude'];
-				$radius = $_GET['radius'];
-				echo get_announcement_by_location($latitude, $longitude, $radius);
+				$gcm_id = $_POST['gcm_id'];
+				$latitude = $_POST['latitude'];
+				$longitude = $_POST['longitude'];
+				echo get_announcement_by_location($gcm_id, $latitude, $longitude);
 			]]></action>
-		</index>
+		</post>
 	</command>
 </api>
