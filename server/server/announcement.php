@@ -70,12 +70,14 @@ function get_geopoint($street_address, $city, $state, $zipcode)
 	$latitude = 0;
   $longitude = 0;
 
-  $address = $street_address + "+" + $city + ",+" + $state + "+" + $zipcode;
+  $address = urlencode($street_address . " " . $city . ", " .$state . " " . $zipcode);
 
-  $json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false&region=$region");
+  echo ($address);
+
+  $json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
   $json = json_decode($json);
 
-  /* var_dump($json); */
+  var_dump($json);
 
   $latitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
   $longitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
