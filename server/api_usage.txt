@@ -106,6 +106,11 @@ return: {"res":"TRUE"} or {"res":"FALSE"} otherwise
 Location Service
 ----------------
 * Get Announcement by Location
-curl -i -X POST -d "gcm_id=1" -d "latitude=1" -d "longitude=1" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/location
+curl -i -X GET "http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/location?latitude=0&longitude=0&radius=0"
+success : {"res":"TRUE","data":[{"id":"1","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}]}
+otherwise : {"res":"FALSE"}
+
+* Ping Server
+curl -i -X POST -d "gcm_id=1" -d "latitude=0" -d "longitude=0" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/location
 success : {"res":"TRUE","data":[{"id":"1","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}]}
 otherwise : {"res":"FALSE"}
