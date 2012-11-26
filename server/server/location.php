@@ -9,15 +9,16 @@ function ping_server($gcm_id, $latitude, $longitude)
 	DAL::disconnect();
 	
 	$res = get_announcement_by_location($latitude, $longitude, 10);
+
 	if($res)
 	{
-		$message = $res;
+		$message = json_decode($res);
 		$tickerText   = "ticker text message";
 		$contentTitle = "content title";
 		$contentText  = "content body";
 		sendNotification(GCM_API_KEY, array($gcm_id) , array('message' => $message, 'tickerText' => $tickerText, 'contentTitle' => $contentTitle, "contentText" => $contentText));
 	}
-	return json_encode($res);
+	return $res;
 }
 
 function get_announcement_by_location($latitude, $longitude, $radius=0)
@@ -70,7 +71,7 @@ function sendNotification( $apiKey, $registrationIdsArray, $messageData )
  
     $response = curl_exec($ch);
     curl_close($ch);
- 
+ 	echo $response;
     return $response;
 }
 
