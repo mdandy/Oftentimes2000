@@ -101,7 +101,7 @@ public class Settings extends Activity implements OnClickListener, OnItemSelecte
 					}
 					else
 					{
-						Log.d(TAG, "An existing announcement fetcher is running!");
+						Log.d(TAG, "An existing server pinger is running!");
 					}
 				}
 				catch (Exception e)

@@ -2,19 +2,24 @@ package edu.gatech.oftentimes2000;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.darvds.ribbonmenu.RibbonMenuView;
 import com.darvds.ribbonmenu.iRibbonMenuCallback;
 
-import edu.gatech.oftentimes2000.map.MainActivity;
+import edu.gatech.oftentimes2000.data.Announcement;
+import edu.gatech.oftentimes2000.server.ContentManager;
 
 public class Oftentimes2000 extends Activity implements iRibbonMenuCallback 
 {
-	/** Called when the activity is first created. */
+	private final String TAG = "Oftentimes2000";
 	private RibbonMenuView rmvMenu;
+	private MapFetcher fetcher;
 	
+	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) 
 	{
@@ -59,21 +64,44 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 				startActivity(category_intent);
 				break;
 			case R.id.ribbon_menu_map:
-				
-				
-				 // TODO: Kevin, tie your map here
-				Intent intent = new Intent(this, MainActivity.class);			// new Intent (caller.class, callee.class)
-				//intent.putExtra("Value1", "This value one for ActivityTwo ");	// any argument to be passed (optional)
-				//intent.putExtra("Value2", "This value two ActivityTwo"); 		// any argument to be passed (optional)
-		        startActivity(intent);											// this actually switch the Activity
-		        
-		        // http://www.vogella.com/articles/AndroidIntent/article.html
-		        
+				try
+				{
+					if (this.fetcher == null || this.fetcher.getStatus() == AsyncTask.Status.FINISHED)
+					{
+						this.fetcher = this.new MapFetcher();
+						this.fetcher.execute();
+					}
+					else
+					{
+						Log.d(TAG, "An existing announcement fetcher is running!");
+					}
+				}
+				catch (Exception e)
+				{
+					Log.e(TAG, e.getMessage());
+				}
 				break;
 			case R.id.ribbon_menu_settings:
 				Intent setting_intent = new Intent (this, Settings.class);
 				startActivity(setting_intent);
 				break;
+		}
+	}
+	
+	public class MapFetcher extends AsyncTask<Void, Void, Void>
+	{
+		@Override
+		protected Void doInBackground(Void... params) 
+		{
+			int latitude = 0;
+			int longitude = 0;
+			int radius = 0;
+			
+			ContentManager cm = ContentManager.getInstance();
+			Announcement[] announcements = cm.getAnncouncementsByLocation(latitude, longitude, radius);
+			
+			// TODO: MapIt
+			return null;
 		}
 	}
 }
