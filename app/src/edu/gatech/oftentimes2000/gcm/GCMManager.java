@@ -115,9 +115,8 @@ public class GCMManager
 	{
 		Context appContext = context.getApplicationContext();
 		
-		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
-		
 		// Gather required params
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
 		String gcmId = settings.getString("gcm_id", ""); 
 		int latitude = 0;	//TODO: get the device latitude
 		int longitude = 0;	//TODO: get the device longitude
