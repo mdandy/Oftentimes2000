@@ -48,8 +48,8 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 	{
 		switch (itemId)
 		{
-			case R.id.ribbon_menu_featured:
-				break;
+//			case R.id.ribbon_menu_featured:
+//				break;
 //			case R.id.ribbon_menu_favorites:
 //				if (!Authenticator.isAuthenticated(this))
 //					AuthenticationDialog.show(this);
