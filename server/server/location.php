@@ -8,9 +8,7 @@ function ping_server($gcm_id, $latitude, $longitude)
 	$success = DAL::update_device_location($gcm_id, $latitude, $longitude);
 	DAL::disconnect();
 	
-	$res = array ("res" => "FALSE");
-	if ($success)
-		$res = array ("res" => "TRUE");
+	$res = get_announcement_by_location($latitude, $longitude, 10);
 	return json_encode($res);
 }
 
