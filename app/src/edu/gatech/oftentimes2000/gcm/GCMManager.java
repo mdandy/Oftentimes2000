@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gcm.GCMRegistrar;
+import com.google.android.maps.GeoPoint;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import edu.gatech.oftentimes2000.Oftentimes2000;
 import edu.gatech.oftentimes2000.Settings;
+import edu.gatech.oftentimes2000.map.GPSManager;
 import edu.gatech.oftentimes2000.server.ContentManager;
 import edu.gatech.oftentimes2000.server.HTTPUtil;
 
@@ -118,8 +120,10 @@ public class GCMManager
 		// Gather required params
 		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
 		String gcmId = settings.getString("gcm_id", ""); 
-		int latitude = 0;	//TODO: get the device latitude
-		int longitude = 0;	//TODO: get the device longitude
+		GeoPoint gp = GPSManager.getCurrentLocation();
+		int latitude = gp.getLatitudeE6();
+		int longitude = gp.getLongitudeE6();
+		int radius = 0;
 		
 		Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
 		

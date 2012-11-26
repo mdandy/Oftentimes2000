@@ -6,18 +6,33 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.darvds.ribbonmenu.RibbonMenuView;
 import com.darvds.ribbonmenu.iRibbonMenuCallback;
+import com.google.android.maps.GeoPoint;
 
+import edu.gatech.oftentimes2000.adapter.AnnouncementAdapter;
 import edu.gatech.oftentimes2000.data.Announcement;
+import edu.gatech.oftentimes2000.map.GPSManager;
 import edu.gatech.oftentimes2000.server.ContentManager;
 
-public class Oftentimes2000 extends Activity implements iRibbonMenuCallback 
+public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnItemClickListener
 {
 	private final String TAG = "Oftentimes2000";
 	private RibbonMenuView rmvMenu;
+	private ProgressBar pbMainLoading;
+	private TextView tvNothing;
+	private ListView lvAnnouncements;
+	
 	private MapFetcher fetcher;
+	private Announcement[] announcements;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -31,6 +46,16 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 		rmvMenu.setMenuClickCallback(this);
 		rmvMenu.setMenuItems(R.menu.ribbon_menu);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		// Init views
+		this.pbMainLoading = (ProgressBar) findViewById(R.id.pbMainAnnouncementLoading);
+		this.tvNothing = (TextView) findViewById(R.id.tvMainAnnouncementNothing);
+		this.lvAnnouncements = (ListView) findViewById(R.id.lvMainAnnouncement);
+		
+		// Loading
+		this.tvNothing.setVisibility(View.GONE);
+		this.lvAnnouncements.setVisibility(View.GONE);
+		this.fetch();
 	}
 
 	@Override
@@ -64,22 +89,6 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 				startActivity(category_intent);
 				break;
 			case R.id.ribbon_menu_map:
-				try
-				{
-					if (this.fetcher == null || this.fetcher.getStatus() == AsyncTask.Status.FINISHED)
-					{
-						this.fetcher = this.new MapFetcher();
-						this.fetcher.execute();
-					}
-					else
-					{
-						Log.d(TAG, "An existing announcement fetcher is running!");
-					}
-				}
-				catch (Exception e)
-				{
-					Log.e(TAG, e.getMessage());
-				}
 				break;
 			case R.id.ribbon_menu_settings:
 				Intent setting_intent = new Intent (this, Settings.class);
@@ -88,20 +97,81 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback
 		}
 	}
 	
-	public class MapFetcher extends AsyncTask<Void, Void, Void>
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
+	{
+		Announcement announcement = (Announcement) this.lvAnnouncements.getItemAtPosition(position);
+		
+		Intent intent = new Intent (this, AnnouncementDetail.class);
+		intent.putExtra("announcement", announcement);
+		startActivity(intent);
+	}
+	
+	private void fetch()
+	{
+		try
+		{
+			if (this.fetcher == null || this.fetcher.getStatus() == AsyncTask.Status.FINISHED)
+			{
+				this.fetcher = this.new MapFetcher();
+				this.fetcher.execute();
+			}
+			else
+			{
+				Log.d(TAG, "An existing announcement fetcher is running!");
+			}
+		}
+		catch (Exception e)
+		{
+			Log.e(TAG, e.getMessage());
+		}
+	}
+	
+	private void publish(Announcement[] announcements)
+	{
+		if (announcements.length == 0)
+		{
+			// Display it
+			this.pbMainLoading.setVisibility(View.GONE);
+			this.tvNothing.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			this.announcements = announcements;
+			
+			// Init array adapter
+			ArrayAdapter<Announcement> adapter = new AnnouncementAdapter(this, announcements);
+			
+			// Init list view
+			this.lvAnnouncements.setAdapter(adapter);
+			this.lvAnnouncements.setOnItemClickListener(this);
+			
+			// Display it
+			this.pbMainLoading.setVisibility(View.GONE);
+			this.lvAnnouncements.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	public class MapFetcher extends AsyncTask<Void, Void, Announcement[]>
 	{
 		@Override
-		protected Void doInBackground(Void... params) 
+		protected Announcement[] doInBackground(Void... params) 
 		{
-			int latitude = 0;
-			int longitude = 0;
+			GeoPoint gp = GPSManager.getCurrentLocation();
+			int latitude = gp.getLatitudeE6();
+			int longitude = gp.getLongitudeE6();
 			int radius = 0;
 			
 			ContentManager cm = ContentManager.getInstance();
 			Announcement[] announcements = cm.getAnncouncementsByLocation(latitude, longitude, radius);
-			
-			// TODO: MapIt
-			return null;
+			return announcements;
+		}
+		
+		@Override
+		protected void onPostExecute(Announcement[] result) 
+		{
+			super.onPostExecute(result);
+			publish(result);
 		}
 	}
 }
