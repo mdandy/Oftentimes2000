@@ -22,7 +22,7 @@ public class ContentManager
 	private static ContentManager instance;
 	
 	private final String TAG = "ContentManager";
-	private final String URL = "http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/";
+	public static final String URL = "http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/";
 	
 	private ContentManager()
 	{
@@ -39,7 +39,7 @@ public class ContentManager
 	public Announcement[] getAnnouncemetsByType(String type)
 	{
 		type = normalizeType(type);
-		HttpResponse response = HTTPUtil.doGet(this.URL + "announcement/all?type=" + type);
+		HttpResponse response = HTTPUtil.doGet(URL + "announcement/all?type=" + type);
 		JSONObject results = HTTPUtil.getResponseAsJSON(response);
 		
 		try 
@@ -97,7 +97,7 @@ public class ContentManager
 	
 	public Profile getProfile(String username)
 	{
-		HttpResponse response = HTTPUtil.doGet(this.URL + "user/" + username);
+		HttpResponse response = HTTPUtil.doGet(URL + "user/" + username);
 		JSONObject results = HTTPUtil.getResponseAsJSON(response);
 		
 		Profile profile = new Profile();
