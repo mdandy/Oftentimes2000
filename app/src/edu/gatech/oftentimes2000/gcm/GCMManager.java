@@ -116,20 +116,27 @@ public class GCMManager
 		Context appContext = context.getApplicationContext();
 		
 		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		
+		// Gather required params
 		String gcmId = settings.getString("gcm_id", ""); 
-		int latitude = 0;
-		int longitude = 0;
+		int latitude = 0;	//TODO: get the device latitude
+		int longitude = 0;	//TODO: get the device longitude
 		
 		Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
+		
+		// Prepare HTTP Request
 		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
 		params.add(new BasicNameValuePair("gcm_id", gcmId));
 		params.add(new BasicNameValuePair("latitude", "" + latitude));
 		params.add(new BasicNameValuePair("longitude", "" + longitude));
+		
+		// Do HTTP Request
 		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "location", params);
 		JSONObject results = HTTPUtil.getResponseAsJSON(response);
 		try 
 		{
-			String status = results.getString("res");
+			// Notify the user
+			String status = results.getString("res");	// TODO: make a better message like number of announcements
 			Intent intent = new Intent(appContext, Oftentimes2000.class);
 		    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, intent, 0);
 		    NotificationCenter.createNotification(appContext, pIntent, "Ping Server :" + status);
