@@ -75,10 +75,13 @@ function get_geopoint($street_address, $city, $state, $zipcode)
   $json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false&region=$region");
   $json = json_decode($json);
 
-  var_dump($json);
+  /* var_dump($json); */
 
   $latitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
   $longitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+
+  $latitude = (int)($latitude * 1000000);
+  $longitude = (int)($longitude * 1000000);
 	
 	return array("latitude" => $latitude, "longitude" => $longitude);
 }
