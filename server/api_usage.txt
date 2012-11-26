@@ -11,7 +11,7 @@ return: {"res":"TRUE","data":{"Username":"mdandy"}} on success or {"res":"FALSE"
 
 Create/ Update User Profile
 ---------------------------
-curl -i -X POST -d "username=user" \
+curl -i -X POST -d "username=mdandy" \
 	-d "name=Name" -d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" \
 	-d "website=domain.com" -d "email=email@domain.com" -d "about=about" \
 	http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/user/profile
@@ -28,7 +28,7 @@ Create/ Update Announcement
 ---------------------------
 
 * Advertisement
-curl -i -X POST -d "username=user" \
+curl -i -X POST -d "username=mdandy" \
 	-d "id=-1" -d title=ads" -d "highlights=highlights" -d "fine_print=fine print" \
 	-d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" -d "radius=5" \
 	-d "regular_price=29.99" -d "promotional_price=14.99" \
