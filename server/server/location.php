@@ -62,7 +62,7 @@ function convert_miles_to_degrees($radius) {
 
 function sendNotification( $apiKey, $registrationIdsArray, $messageData )
 {   
-    /*$headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
+    $headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
     $data = array(
         'data' => $messageData,
         'registration_ids' => $registrationIdsArray
@@ -80,7 +80,7 @@ function sendNotification( $apiKey, $registrationIdsArray, $messageData )
     $response = curl_exec($ch);
     curl_close($ch);
  
-    return $response;*/
+    return $response;
 }
 
 ?>
