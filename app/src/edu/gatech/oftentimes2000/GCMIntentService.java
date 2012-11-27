@@ -1,5 +1,7 @@
 package edu.gatech.oftentimes2000;
 
+import java.util.Set;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +9,7 @@ import org.json.JSONObject;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -40,29 +43,22 @@ public class GCMIntentService extends GCMBaseIntentService
 		String dataRaw = intent.getStringExtra("data");
 		Log.d(TAG, "Received GCM");
 		
+		if (dataRaw == null)
+			return;
+		
 		try
 		{
 			JSONObject json = new JSONObject(dataRaw);
-			ContentManager cm = ContentManager.getInstance();
 			
-			JSONArray data = json.getJSONArray("data");
-			Announcement[] announcements = new Announcement[data.length()];
-			for (int i = 0; i < data.length(); i++)
-			{
-				// Parse data
-				JSONObject datum = data.getJSONObject(i);
-				Announcement announcement = cm.parseAnnouncement(datum);
-				
-				// Store it in the announcement array
-				announcements[i] = announcement;
-			}
+			ContentManager cm = ContentManager.getInstance();
+			Announcement announcement = cm.parseAnnouncement(json);
 			
 			// Sent notification
 			Context appContext = context.getApplicationContext();
-			Intent notiIntent = new Intent(appContext, AnnouncementSelection.class);
-			notiIntent.putExtra("announcements", announcements);
+			Intent notiIntent = new Intent(appContext, AnnouncementDetail.class);
+			notiIntent.putExtra("announcement", announcement);
 			
-		    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, intent, 0);
+		    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, notiIntent, 0);
 		    NotificationCenter.createNotification(appContext, pIntent, "You get new announcements!");
 		}
 		catch (JSONException e) 
