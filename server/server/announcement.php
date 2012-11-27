@@ -1,6 +1,7 @@
 <?php
 
 require_once("dal.php");
+require_once("notification.php");
 
 function upsert_advertisement($id=-1, $username, $title, $highlights, $fine_print="", 
 							  $street_address, $city, $state, $zipcode, $radius,
@@ -65,6 +66,18 @@ function get_type($type)
 	return -1;	
 }
 
+function get_type_string($type)
+{
+	switch ($type)
+	{
+		case 1 : return "advertisement";
+		case 2 : return "psa";
+		case 3 : return "event";
+	}
+
+	return type;	
+}
+
 function get_geopoint($street_address, $city, $state, $zipcode)
 {
 	$latitude = 0;
@@ -111,6 +124,23 @@ function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fin
 										    $regular_price, $promotional_price, 
 										    $from, $to, $url, $category);
 	}
+	
+	// TODO: Get all devices that subscribe to this type
+	$type_string = get_type_string($type);
+	
+	// TODO: Filter the devices that is in the radius
+	
+	// TODO: Notify the device
+	$res = get_announcement_by_location($latitude, $longitude);
+
+	if($res)
+	{
+		$message = json_decode($res);
+		sendNotification(array($gcm_id) , array('message' => $message));
+	}
+	return $res;
+	
+	
 	DAL::disconnect();
 	
 	$res = array ("res" => "FALSE");
