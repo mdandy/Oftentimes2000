@@ -67,13 +67,13 @@ public class Subscription extends Activity implements OnClickListener
 			case R.id.cbSubscribePSA:
 				editor.putBoolean("sub_psa", this.cbPSA.isChecked());
 				subscription = "psa";
-				if (!this.cbAdvertisement.isChecked())
+				if (!this.cbPSA.isChecked())
 					delete = true;
 				break;
 			case R.id.cbSubscribeEvent:
 				editor.putBoolean("sub_event", this.cbEvent.isChecked());
 				subscription = "event";
-				if (!this.cbAdvertisement.isChecked())
+				if (!this.cbEvent.isChecked())
 					delete = true;
 				break;
 		}
