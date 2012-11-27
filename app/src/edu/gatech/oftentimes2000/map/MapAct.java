@@ -86,15 +86,15 @@ public class MapAct extends MapActivity implements LocationListener {
 
 			//controller.setZoom(15);
 
-			Toast.makeText(
-					this,
-					"Current location:\nLatitude: " + location.getLatitude()
-					+ "\n" + "Longitude: " + location.getLongitude(),
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(
+//					this,
+//					"Current location:\nLatitude: " + location.getLatitude()
+//					+ "\n" + "Longitude: " + location.getLongitude(),
+//					Toast.LENGTH_LONG).show();
 		} else {
 
-			Toast.makeText(this, "Cannot fetch current location!",
-					Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "Cannot fetch current location!",
+//					Toast.LENGTH_LONG).show();
 		}
 
 		// fetch the drawable - the pin that will be displayed on the map
