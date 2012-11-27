@@ -131,15 +131,8 @@ function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fin
 	// TODO: Filter the devices that is in the radius
 	
 	// TODO: Notify the device
-	$res = get_announcement_by_location($latitude, $longitude);
-
-	if($res)
-	{
-		$message = json_decode($res);
-		sendNotification(array($gcm_id) , array('message' => $message));
-	}
-	return $res;
-	
+	//$message = json_decode($res);
+	//sendNotification(array($gcm_id) , array('message' => $message));
 	
 	DAL::disconnect();
 	
