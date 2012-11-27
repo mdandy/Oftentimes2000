@@ -22,11 +22,10 @@ function get_announcement_by_location($latitude, $longitude)
  	$add = 1 / cos((float)($r * 2)); 
 	$r = (int)($r * 1000000);
   
-	// TODO: geopoint calculation
-	$from_latitude = $latitude - $r;
-	$to_latitude = $latitude + $r;
-	$from_longitude = $longitude - ($add * ($r*2));
-	$to_longitude = $longitude + ($add * ($r*2));
+	$from_latitude = (int)($latitude - $r);
+	$to_latitude = (int)($latitude + $r);
+	$from_longitude = (int)($longitude - ($add * ($r*2)));
+	$to_longitude = (int)($longitude + ($add * ($r*2)));
 	
 	DAL::connect();
 	$announcements = DAL::get_announcement_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude);

@@ -2,6 +2,7 @@
 
 require_once("dal.php");
 require_once("notification.php");
+require_once("location.php");
 
 function upsert_advertisement($id=-1, $username, $title, $highlights, $fine_print="", 
 							  $street_address, $city, $state, $zipcode, $radius,
@@ -85,12 +86,12 @@ function get_geopoint($street_address, $city, $state, $zipcode)
 
   $address = urlencode($street_address . " " . $city . ", " .$state . " " . $zipcode);
 
-  echo ($address);
+ 
 
   $json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
   $json = json_decode($json);
 
-  var_dump($json);
+  
 
   $latitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
   $longitude = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
@@ -110,7 +111,8 @@ function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fin
 	DAL::connect();
 	if ($id == -1)
 	{
-		$success = DAL::insert_announcement($username, $title, $type, $highlights, $fine_print, 
+
+		$id = DAL::insert_announcement($username, $title, $type, $highlights, $fine_print, 
 										    $street_address, $city, $state, $zipcode, $radius,
 										    $latitude, $longitude,
 										    $regular_price, $promotional_price, 
@@ -118,28 +120,60 @@ function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fin
 	}
 	else
 	{
-		$success = DAL::update_announcement($id, $username, $title, $type, $highlights, $fine_print, 
+		$id = DAL::update_announcement($id, $username, $title, $type, $highlights, $fine_print, 
 										    $street_address, $city, $state, $zipcode, $radius,
 										    $latitude, $longitude,
 										    $regular_price, $promotional_price, 
 										    $from, $to, $url, $category);
 	}
 	
-	// TODO: Get all devices that subscribe to this type
-	$type_string = get_type_string($type);
-	
-	// TODO: Filter the devices that is in the radius
-	
-	// TODO: Notify the device
-	//$message = json_decode($res);
-	//sendNotification(array($gcm_id) , array('message' => $message));
-	
+	if($id != -1)
+	{
+		$type_string = get_type_string($type);
+		$idsOfType = DAL::get_subscriptions($type_string);
+		$gcmIDS = array();
+		for($i = 0; $i < count($idsOfType); $i++)
+		{
+			array_push($gcmIDS, $idsOfType[$i]["gcm_id"]);
+		}
+		
+		$deviceData = get_device_by_location($latitude, $longitude);
+		$deviceIDS = array();
+		for($i = 0; $i < count($deviceData); $i++)
+		{
+			array_push($deviceIDS, $deviceData[$i]["gcm_id"]);
+		}
+
+		$intersection = array_intersect($gcmIDS, $deviceIDS);
+		
+		$announcement = DAL::get_announcement_by_id($id);
+		$message = $announcement[0];
+		sendNotification($intersection , $message);
+	}
+
 	DAL::disconnect();
-	
+
 	$res = array ("res" => "FALSE");
-	if ($success)
+	if ($id != -1)
 		$res = array ("res" => "TRUE");
 	return json_encode($res);
+}
+
+function get_device_by_location($latitude, $longitude)
+{
+	$radius = 5;
+	$r = convert_miles_to_degrees($radius);
+ 	$add = 1 / cos((float)($r * 2)); 
+	$r = (int)($r * 1000000);
+  
+	$from_latitude = (int)($latitude - $r);
+	$to_latitude = (int)($latitude + $r);
+	$from_longitude = (int)($longitude - ($add * ($r*2)));
+	$to_longitude = (int)($longitude + ($add * ($r*2)));
+	
+	//$announcements = DAL::get_device_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude);
+	$announcements = DAL::get_device_by_location(0,0,0,0);
+	return $announcements;
 }
 
 function delete_announcement($id)

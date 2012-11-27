@@ -10,7 +10,7 @@ function sendNotification($registrationIdsArray, $messageData )
         'data' => $messageData,
         'registration_ids' => $registrationIdsArray
     );
- 
+
     $ch = curl_init();
  
     curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers ); 
@@ -22,8 +22,6 @@ function sendNotification($registrationIdsArray, $messageData )
  
     $response = curl_exec($ch);
     curl_close($ch);
- 	echo $response;
-    return $response;
 }
 
 ?>
