@@ -1,6 +1,7 @@
 package edu.gatech.oftentimes2000;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import edu.gatech.oftentimes2000.data.Announcement;
 import android.app.Activity;
@@ -130,8 +131,8 @@ public class AnnouncementDetail extends Activity implements OnClickListener
 				this.url.setVisibility(View.GONE);
 			
 			// Date
-			SimpleDateFormat dateFormat = new SimpleDateFormat();
-			dateFormat.applyPattern("EEE, MMM d, yyyy hh:mm a");
+			String format = "EEE, MMM d, yyyy hh:mm a";
+			SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
 			this.fromDate.append(" " + dateFormat.format(this.announcement.fromDate.getTime()));
 			this.toDate.append(" " + dateFormat.format(this.announcement.toDate.getTime()));
 			

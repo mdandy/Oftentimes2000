@@ -187,8 +187,7 @@
 			<action file='server/location.php'><![CDATA[
 				$latitude = $_GET['latitude'];
 				$longitude = $_GET['longitude'];
-				$radius = $_GET['radius'];
-				echo get_announcement_by_location($latitude, $longitude, $radius);
+				echo get_announcement_by_location($latitude, $longitude);
 			]]></action>
 		</index>
 		

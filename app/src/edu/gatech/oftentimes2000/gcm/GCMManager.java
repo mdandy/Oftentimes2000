@@ -123,8 +123,7 @@ public class GCMManager
 		GeoPoint gp = GPSManager.getCurrentLocation(appContext);
 		int latitude = gp.getLatitudeE6();
 		int longitude = gp.getLongitudeE6();
-		int radius = 0;
-		
+
 		Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
 		
 		// Prepare HTTP Request
