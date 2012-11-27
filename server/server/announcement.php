@@ -126,7 +126,8 @@ function upsert_announcement($id=-1, $username, $title, $type, $highlights, $fin
 										    $regular_price, $promotional_price, 
 										    $from, $to, $url, $category);
 	}
-	
+
+	//echo $id . "\n";
 	if($id != -1)
 	{
 		$type_string = get_type_string($type);
@@ -171,8 +172,7 @@ function get_device_by_location($latitude, $longitude)
 	$from_longitude = (int)($longitude - ($add * ($r*2)));
 	$to_longitude = (int)($longitude + ($add * ($r*2)));
 	
-	//$announcements = DAL::get_device_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude);
-	$announcements = DAL::get_device_by_location(0,0,0,0);
+	$announcements = DAL::get_device_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude);
 	return $announcements;
 }
 

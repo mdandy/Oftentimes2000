@@ -5,6 +5,7 @@ require_once("dbconfig.php");
 function sendNotification($registrationIdsArray, $messageData )
 {   
 	$apiKey = GCM_API_KEY;
+    $messageData = array("data" => $messageData);
     $headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
     $data = array(
         'data' => $messageData,
@@ -21,6 +22,7 @@ function sendNotification($registrationIdsArray, $messageData )
     curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data) );
  
     $response = curl_exec($ch);
+    //echo $response . " \n";
     curl_close($ch);
 }
 
