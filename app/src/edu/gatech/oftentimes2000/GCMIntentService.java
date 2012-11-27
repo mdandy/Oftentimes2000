@@ -1,13 +1,14 @@
 package edu.gatech.oftentimes2000;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
 import edu.gatech.oftentimes2000.gcm.GCMManager;
+import edu.gatech.oftentimes2000.gcm.NotificationCenter;
 
 public class GCMIntentService extends GCMBaseIntentService
 {
@@ -30,8 +31,15 @@ public class GCMIntentService extends GCMBaseIntentService
 	@Override
 	public void onMessage(Context context, Intent intent) 
 	{
-		// TODO Put it on notification
-		Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_LONG).show();
+		String dataRaw = intent.getStringExtra("data");
+		Log.d(TAG, "Received GCM");
+		
+		// Sent notification
+		Context appContext = context.getApplicationContext();
+		Intent notiIntent = new Intent(appContext, Oftentimes2000.class);
+		notiIntent.putExtra("data", dataRaw);
+	    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, intent, 0);
+	    NotificationCenter.createNotification(appContext, pIntent, "You get new announcements!");
 	}
 
 	@Override
