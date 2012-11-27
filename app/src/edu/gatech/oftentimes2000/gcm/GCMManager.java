@@ -142,4 +142,14 @@ public class GCMManager
 			Log.e(TAG, e.getMessage());
 		}
 	}
+	
+	public static void deleteSubscription(String subscription)
+	{
+		
+	}
+	
+	public static void updateSubscription(String subscription)
+	{
+		
+	}
 }
