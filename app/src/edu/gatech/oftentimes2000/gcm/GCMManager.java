@@ -143,13 +143,55 @@ public class GCMManager
 		}
 	}
 	
-	public static void deleteSubscription(String subscription)
+	public static void deleteSubscription(Context context, String subscription)
 	{
+		Context appContext = context.getApplicationContext();
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		String gcmId = settings.getString("gcm_id", ""); 
 		
+		// Prepare HTTP Request
+		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+		params.add(new BasicNameValuePair("gcm_id", gcmId));
+		params.add(new BasicNameValuePair("subscription", "" + subscription));
+
+		// Do HTTP Request
+		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "subscription/delete", params);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		try 
+		{
+			String status = results.getString("res");
+			if (status.equalsIgnoreCase("TRUE"))
+				Log.d(TAG, "Pinging Server : delete subscription = " + subscription);
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
 	}
 	
-	public static void updateSubscription(String subscription)
+	public static void updateSubscription(Context context, String subscription)
 	{
+		Context appContext = context.getApplicationContext();
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		String gcmId = settings.getString("gcm_id", ""); 
 		
+		// Prepare HTTP Request
+		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+		params.add(new BasicNameValuePair("gcm_id", gcmId));
+		params.add(new BasicNameValuePair("subscription", "" + subscription));
+
+		// Do HTTP Request
+		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "subscription/update", params);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		try 
+		{
+			String status = results.getString("res");
+			if (status.equalsIgnoreCase("TRUE"))
+				Log.d(TAG, "Pinging Server : update subscription = " + subscription);
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
 	}
 }

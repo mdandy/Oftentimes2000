@@ -111,9 +111,9 @@ public class Subscription extends Activity implements OnClickListener
 			String q = params[0];
 			
 			if (q.equals("add"))
-				GCMManager.updateSubscription(params[1]);
+				GCMManager.updateSubscription(Subscription.this, params[1]);
 			else if (q.equals("delete"))
-				GCMManager.deleteSubscription(params[1]);
+				GCMManager.deleteSubscription(Subscription.this, params[1]);
 			return null;
 		}
 	}

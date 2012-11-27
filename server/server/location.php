@@ -1,6 +1,7 @@
 <?php
 
 require_once("dal.php");
+require_once("notification.php");
 
 function ping_server($gcm_id, $latitude, $longitude)
 {
@@ -13,7 +14,7 @@ function ping_server($gcm_id, $latitude, $longitude)
 	if($res)
 	{
 		$message = json_decode($res);
-		sendNotification(GCM_API_KEY, array($gcm_id) , array('message' => $message));
+		sendNotification(array($gcm_id) , array('message' => $message));
 	}
 	return $res;
 }
@@ -44,29 +45,6 @@ function convert_miles_to_degrees($radius)
 {
 	$r = $radius / 69.047;
 	return $r;
-}
-
-function sendNotification( $apiKey, $registrationIdsArray, $messageData )
-{   
-    $headers = array("Content-Type:" . "application/json", "Authorization:" . "key=" . $apiKey);
-    $data = array(
-        'data' => $messageData,
-        'registration_ids' => $registrationIdsArray
-    );
- 
-    $ch = curl_init();
- 
-    curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers ); 
-    curl_setopt( $ch, CURLOPT_URL, "https://android.googleapis.com/gcm/send" );
-    curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0 );
-    curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, 0 );
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-    curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode($data) );
- 
-    $response = curl_exec($ch);
-    curl_close($ch);
- 	echo $response;
-    return $response;
 }
 
 ?>
