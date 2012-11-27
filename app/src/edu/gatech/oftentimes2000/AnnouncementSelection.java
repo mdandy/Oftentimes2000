@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,12 +49,23 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 
 		// Get intent extra
 		Intent intent = getIntent();
-		String category = intent.getStringExtra("category");
-		
-		// Loading
-		this.tvNothing.setVisibility(View.GONE);
-		this.lvAnnouncements.setVisibility(View.GONE);
-		this.fetch(category);
+		if (intent.hasExtra("category"))
+		{
+			String category = intent.getStringExtra("category");
+			
+			// Loading
+			this.tvNothing.setVisibility(View.GONE);
+			this.lvAnnouncements.setVisibility(View.GONE);
+			this.fetch(category);
+		}
+		else if (intent.hasExtra("announcements"))
+		{
+			Parcelable[] parcels = intent.getParcelableArrayExtra("announcements");
+			Announcement[] announcements = new Announcement[parcels.length];
+			for (int i = 0; i < parcels.length; i++)
+				announcements[i] = (Announcement) parcels[i];
+			this.publish(announcements);
+		}
 	}
 
 	@Override

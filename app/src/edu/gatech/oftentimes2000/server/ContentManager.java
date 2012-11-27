@@ -111,7 +111,7 @@ public class ContentManager
 		return new Announcement[0];
 	}
 	
-	private Announcement parseAnnouncement(JSONObject datum)
+	public Announcement parseAnnouncement(JSONObject datum)
 	{
 		Announcement announcement = new Announcement();
 		try
