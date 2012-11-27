@@ -15,6 +15,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
@@ -33,7 +36,10 @@ public class HTTPUtil
 		
 		try 
 		{
-			HttpClient client = new DefaultHttpClient();  
+			final HttpParams httpParams = new BasicHttpParams();
+		    HttpConnectionParams.setConnectionTimeout(httpParams, 15 * 1000);	// 15 seconds
+		    
+			HttpClient client = new DefaultHttpClient(httpParams);
 			HttpGet get = new HttpGet(url);
 			response = client.execute(get);  
 		} 
@@ -56,7 +62,10 @@ public class HTTPUtil
 		HttpResponse response = null;
 		try 
 		{
-			HttpClient client = new DefaultHttpClient();  
+			final HttpParams httpParams = new BasicHttpParams();
+		    HttpConnectionParams.setConnectionTimeout(httpParams, 15 * 1000);	// 15 seconds
+		    
+			HttpClient client = new DefaultHttpClient(httpParams);  
 			HttpPost post = new HttpPost(url);
 			UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 			post.setEntity(ent);
