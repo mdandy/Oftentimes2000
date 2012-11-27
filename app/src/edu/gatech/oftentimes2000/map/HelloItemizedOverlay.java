@@ -66,33 +66,12 @@ public class HelloItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	private final class OkOnClickListener implements
 	DialogInterface.OnClickListener {
 		public void onClick(DialogInterface dialog, int which) {
-
 		}
 	}
 
 	public void clear() {
-
 		mOverlays.clear();
 		populate();
 	}
-
-	// @Override
-	// public boolean onTouchEvent(MotionEvent event, MapView mapView) {
-	//
-	// // when the user lifts its finger
-	// if (gestureDetector.onTouchEvent(event)) {
-	// return true;
-	// }
-	//
-	// return false;
-	// }
-	//
-	// public GestureDetector getGestureDetector() {
-	// return gestureDetector;
-	// }
-	//
-	// public void setGestureDetector(GestureDetector gestureDetector) {
-	// this.gestureDetector = gestureDetector;
-	// }
 
 }

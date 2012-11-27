@@ -26,6 +26,7 @@ import com.google.android.maps.GeoPoint;
 import edu.gatech.oftentimes2000.adapter.AnnouncementAdapter;
 import edu.gatech.oftentimes2000.data.Announcement;
 import edu.gatech.oftentimes2000.map.GPSManager;
+import edu.gatech.oftentimes2000.map.MapAct;
 import edu.gatech.oftentimes2000.server.ContentManager;
 
 public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnItemClickListener
@@ -94,6 +95,12 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnI
 				startActivity(category_intent);
 				break;
 			case R.id.ribbon_menu_map:
+				//TODO: Kevin call maps with announcements
+//				announcements[0].address.geopoint;
+				Intent intent = new Intent (this, MapAct.class);
+				intent.putExtra("announcement", announcements);
+				startActivity(intent);
+				
 				break;
 			case R.id.ribbon_menu_settings:
 				Intent setting_intent = new Intent (this, Settings.class);

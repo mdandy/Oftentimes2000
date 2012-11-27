@@ -2,6 +2,7 @@ package edu.gatech.oftentimes2000;
 
 import edu.gatech.oftentimes2000.adapter.AnnouncementAdapter;
 import edu.gatech.oftentimes2000.data.Announcement;
+import edu.gatech.oftentimes2000.map.MapAct;
 import edu.gatech.oftentimes2000.server.ContentManager;
 import android.app.Activity;
 import android.content.Intent;
@@ -71,8 +72,12 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 	{
 		switch (v.getId())
 		{
+		//TODO: Call Maps Kevin
 			case R.id.bMapIt: 
-				// TODO: map it
+				Intent intent = new Intent (this, MapAct.class);
+				intent.putExtra("arr", true);
+				intent.putExtra("announcement", announcements);
+				startActivity(intent);
 				break;
 		}
 	}

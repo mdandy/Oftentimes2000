@@ -3,6 +3,7 @@ package edu.gatech.oftentimes2000;
 import java.text.SimpleDateFormat;
 
 import edu.gatech.oftentimes2000.data.Announcement;
+import edu.gatech.oftentimes2000.map.MapAct;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -73,7 +74,10 @@ public class AnnouncementDetail extends Activity implements OnClickListener
 		switch (v.getId())
 		{
 			case R.id.detailMapIt: 
-				// TODO: map it
+				Intent intent = new Intent (this, MapAct.class);
+				intent.putExtra("arr", false);
+				intent.putExtra("announcement", announcement);
+				startActivity(intent);
 				break;
 		}
 	}
