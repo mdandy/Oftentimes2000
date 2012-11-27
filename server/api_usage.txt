@@ -114,3 +114,13 @@ otherwise : {"res":"FALSE"}
 curl -i -X POST -d "gcm_id=1" -d "latitude=0" -d "longitude=0" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/location
 success : {"res":"TRUE","data":[{"id":"1","username":"some_username","title":"ads","type":"1","highlights":"highlights","fine_print":"fine print","street_address":"123 street","city":"city","state":"GA","zipcode":"12345","radius":"5","latitude":"0","longitude":"0","regular_price":"29.99","promotional_price":"14.99","from_date":"2012-11-23 00:00:00","to_date":"2012-11-25 23:59:59","url":"domain.com","category":"#food"}]}
 otherwise : {"res":"FALSE"}
+
+Subcription
+-----------
+* add/ update subcription
+curl -i -X POST -d "gcm_id=1" -d "subscription=psa" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/subscription/update
+return: {"res":"TRUE"} or {"res":"FALSE"} otherwise
+
+* delete subcription
+curl -i -X POST -d "gcm_id=1" -d "subscription=psa" http://m2.cip.gatech.edu/d/maven/api/Oftentimes2000/subscription/delete
+{"res":"TRUE"} or {"res":"FALSE"} otherwise

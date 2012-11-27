@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: db.cip.gatech.edu
--- Generation Time: Nov 25, 2012 at 06:55 PM
+-- Generation Time: Nov 27, 2012 at 10:57 AM
 -- Server version: 5.5.15-log
 -- PHP Version: 5.3.13
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `oAdvertisements` (
   `category` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`,`username`),
   KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,19 @@ CREATE TABLE IF NOT EXISTS `oDevices` (
   `longitude` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `gcm_id` (`gcm_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oSubscriptions`
+--
+
+CREATE TABLE IF NOT EXISTS `oSubscriptions` (
+  `gcm_id` varchar(512) NOT NULL,
+  `subscription` varchar(64) NOT NULL,
+  PRIMARY KEY (`gcm_id`,`subscription`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -94,6 +106,12 @@ CREATE TABLE IF NOT EXISTS `oUsers` (
 --
 ALTER TABLE `oAdvertisements`
   ADD CONSTRAINT `oAdvertisements_ibfk_1` FOREIGN KEY (`username`) REFERENCES `oUsers` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `oSubscriptions`
+--
+ALTER TABLE `oSubscriptions`
+  ADD CONSTRAINT `oSubscriptions_ibfk_1` FOREIGN KEY (`gcm_id`) REFERENCES `oDevices` (`gcm_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

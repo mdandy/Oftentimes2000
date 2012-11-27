@@ -62,7 +62,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -82,7 +82,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -117,7 +117,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -136,7 +136,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -182,7 +182,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -227,7 +227,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -243,7 +243,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -260,7 +260,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -291,7 +291,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -308,7 +308,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -331,7 +331,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
@@ -366,7 +366,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -385,7 +385,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
 	}
@@ -407,9 +407,82 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			echo ("Error: " . $e->getMessage());
+			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
+	}
+	
+	/**
+	 * SUBSCRIPTION
+	 */
+	public static function upsert_subscription($gcm_id, $subscription)
+	{
+		try 
+		{
+			$sql = "INSERT INTO oSubscriptions (gcm_id, subscription) VALUES (:gcm_id, :subscription)";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			$query->bindParam(":subscription", $subscription, PDO::PARAM_STR, 64);
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			//echo ("Error: " . $e->getMessage());
+		}
+		return false;
+	}
+	
+	public static function delete_subscription($gcm_id, $subscription)
+	{
+		try 
+		{
+			$sql = "DELETE FROM oSubscriptions WHERE gcm_id=:gcm_id AND subscription=:subscription";
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			$query->bindParam(":subscription", $subscription, PDO::PARAM_STR, 64);
+			return $query->execute();
+		}
+		catch(PDOException $e) 
+		{
+			//echo ("Error: " . $e->getMessage());
+		}
+		return false;
+	}
+	
+	public static function get_subscriptions_by_id($gcm_id)
+	{
+		try 
+		{	
+			$sql = "SELECT * FROM oSubscriptions WHERE gcm_id=:gcm_id";
+			
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":gcm_id", $gcm_id, PDO::PARAM_STR, 512);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			//echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
+	}
+	
+	public static function get_subscriptions($subscription)
+	{
+		try 
+		{	
+			$sql = "SELECT * FROM oSubscriptions WHERE subscription=:subscription";
+			
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":subscription", $subscription, PDO::PARAM_STR, 64);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			//echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
 	}
 }
 ?>

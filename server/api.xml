@@ -203,4 +203,35 @@
 			]]></action>
 		</post>
 	</command>
+	
+	<command id='subscription' security='public'>
+		<description><![CDATA[This API lets you to interact with the subscription system]]></description>
+		
+		<post>
+			<description><![CDATA[
+				Update, delete, or retrieve subscription
+			]]></description>
+			<action file='server/subscription.php'><![CDATA[
+				$q = $_REST['subscription'];
+				if (strcmp($q, 'update') == 0)
+				{
+					$gcm_id = $_POST['gcm_id'];
+					$subscription = $_POST['subscription'];
+					echo update_subscription($gcm_id, $subscription);
+				}
+				else if (strcmp($q, 'delete') == 0)
+				{
+					$gcm_id = $_POST['gcm_id'];
+					$subscription = $_POST['subscription'];
+					echo delete_subscription($gcm_id, $subscription);
+				}
+				else if (strcmp($q, 'debug') == 0)
+				{
+					$gcm_id = $_POST['gcm_id'];
+					$subscription = $_POST['subscription'];
+					echo get_subscriptions($subscription);
+				}
+			]]></action>
+		</post>
+	</command>
 </api>
