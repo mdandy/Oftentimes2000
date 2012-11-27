@@ -9,15 +9,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.google.android.gcm.GCMRegistrar;
 import com.google.android.maps.GeoPoint;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
-import edu.gatech.oftentimes2000.Oftentimes2000;
 import edu.gatech.oftentimes2000.Settings;
 import edu.gatech.oftentimes2000.map.GPSManager;
 import edu.gatech.oftentimes2000.server.ContentManager;
@@ -123,10 +121,7 @@ public class GCMManager
 		GeoPoint gp = GPSManager.getCurrentLocation(appContext);
 		int latitude = gp.getLatitudeE6();
 		int longitude = gp.getLongitudeE6();
-		int radius = 0;
-		
-		Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
-		
+
 		// Prepare HTTP Request
 		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
 		params.add(new BasicNameValuePair("gcm_id", gcmId));
@@ -138,11 +133,61 @@ public class GCMManager
 		JSONObject results = HTTPUtil.getResponseAsJSON(response);
 		try 
 		{
-			// Notify the user
-			String status = results.getString("res");	// TODO: make a better message like number of announcements
-			Intent intent = new Intent(appContext, Oftentimes2000.class);
-		    PendingIntent pIntent = PendingIntent.getActivity(appContext, 0, intent, 0);
-		    NotificationCenter.createNotification(appContext, pIntent, "Ping Server :" + status);
+			String status = results.getString("res");
+			if (status.equalsIgnoreCase("TRUE"))
+				Log.d(TAG, "Pinging Server : latitude = " + latitude + " & longitude = " + longitude);
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
+	}
+	
+	public static void deleteSubscription(Context context, String subscription)
+	{
+		Context appContext = context.getApplicationContext();
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		String gcmId = settings.getString("gcm_id", ""); 
+		
+		// Prepare HTTP Request
+		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+		params.add(new BasicNameValuePair("gcm_id", gcmId));
+		params.add(new BasicNameValuePair("subscription", "" + subscription));
+
+		// Do HTTP Request
+		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "subscription/delete", params);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		try 
+		{
+			String status = results.getString("res");
+			if (status.equalsIgnoreCase("TRUE"))
+				Log.d(TAG, "Pinging Server : delete subscription = " + subscription);
+		} 
+		catch (JSONException e) 
+		{
+			Log.e(TAG, e.getMessage());
+		}
+	}
+	
+	public static void updateSubscription(Context context, String subscription)
+	{
+		Context appContext = context.getApplicationContext();
+		SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+		String gcmId = settings.getString("gcm_id", ""); 
+		
+		// Prepare HTTP Request
+		List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+		params.add(new BasicNameValuePair("gcm_id", gcmId));
+		params.add(new BasicNameValuePair("subscription", "" + subscription));
+
+		// Do HTTP Request
+		HttpResponse response = HTTPUtil.doPost(ContentManager.URL + "subscription/update", params);
+		JSONObject results = HTTPUtil.getResponseAsJSON(response);
+		try 
+		{
+			String status = results.getString("res");
+			if (status.equalsIgnoreCase("TRUE"))
+				Log.d(TAG, "Pinging Server : update subscription = " + subscription);
 		} 
 		catch (JSONException e) 
 		{

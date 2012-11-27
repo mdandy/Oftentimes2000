@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_featured">Featured</string>
-    <string name="menu_favorites">Favorites</string>
+    <string name="menu_subscription">Subscription</string>
     <string name="menu_categories">Categories</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
@@ -36,5 +36,9 @@
     <string name="ping_interval_enable">Enable server ping</string>
     <string name="ping_interval_desc">This requires GPS</string>
     <string name="ping_server">Ping Server</string>
+    <string name="subscription">Subscription</string>
+    <string name="a_advertisement">Advertisement</string>
+    <string name="a_psa">Public Service Announcement</string>
+    <string name="a_event">Event</string>
 
 </resources>

@@ -3,6 +3,7 @@ package edu.gatech.oftentimes2000;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 import com.darvds.ribbonmenu.RibbonMenuView;
 import com.darvds.ribbonmenu.iRibbonMenuCallback;
@@ -86,10 +88,21 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnI
 		{
 //			case R.id.ribbon_menu_featured:
 //				break;
-//			case R.id.ribbon_menu_favorites:
+			case R.id.ribbon_menu_subscription:
 //				if (!Authenticator.isAuthenticated(this))
 //					AuthenticationDialog.show(this);
-//				break;
+				
+				Context appContext = this.getApplicationContext();
+				SharedPreferences settings = appContext.getSharedPreferences(Settings.SETTING_PREFERENCE, Context.MODE_PRIVATE);
+				String gcmId = settings.getString("gcm_id", "");
+				if (gcmId.isEmpty())
+					Toast.makeText(appContext, "You have to enable GCM first.", Toast.LENGTH_SHORT).show();
+				else
+				{
+					Intent subIntent = new Intent (this, Subscription.class);
+					startActivity(subIntent);
+				}
+				break;
 			case R.id.ribbon_menu_categories:
 				Intent category_intent = new Intent (this, CategorySelection.class);
 				startActivity(category_intent);
