@@ -28,7 +28,7 @@ Create/ Update Announcement
 ---------------------------
 
 * Advertisement
-curl -i -X POST -d "username=mdandy" \
+curl -i -X POST -d "username=test" \
 	-d "id=-1" -d "title=ads" -d "highlights=highlights" -d "fine_print=fine print" \
 	-d "street_address=123 street" -d "city=city" -d "state=GA" -d "zipcode=12345" -d "radius=5" \
 	-d "regular_price=29.99" -d "promotional_price=14.99" \

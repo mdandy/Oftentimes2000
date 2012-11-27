@@ -178,13 +178,15 @@ class DAL
 			$query->bindParam(":to", $to);
 			$query->bindParam(":url", $url, PDO::PARAM_STR, 64);
 			$query->bindParam(":category", $category, PDO::PARAM_STR, 64);
-			return $query->execute();
+			$query->execute();
+			
+			return self::$dbh->lastInsertId();
 		}
 		catch(PDOException $e) 
 		{
-			//echo ("Error: " . $e->getMessage());
+			echo ("Error: " . $e->getMessage());
 		}
-		return false;
+		return -1;
 	}
 	
 	public static function update_announcement($id, $username, $title, $type, $highlights, $fine_print="", 
@@ -223,13 +225,17 @@ class DAL
 			$query->bindParam(":u_to", $to);
 			$query->bindParam(":u_url", $url, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_category", $category, PDO::PARAM_STR, 64);
-			return $query->execute();
+			$success = $query->execute();
+			
+			if ($success)
+				return $id;
+			return -1;
 		}
 		catch(PDOException $e) 
 		{
 			//echo ("Error: " . $e->getMessage());
 		}
-		return false;
+		return -1;
 	}
 	
 	public static function delete_announcement($id)
@@ -410,6 +416,29 @@ class DAL
 			//echo ("Error: " . $e->getMessage());
 		}
 		return false;
+	}
+	
+	public static function get_device_by_location($from_latitude, $to_latitude, $from_longitude, $to_longitude)
+	{
+		try 
+		{	
+			$sql = "SELECT * FROM oDevices WHERE";
+			$sql .= " latitude BETWEEN :from_latitude AND :to_latitude AND";
+			$sql .= " longitude BETWEEN :from_longitude AND :to_longitude";
+			
+			$query = self::$dbh->prepare($sql);
+			$query->bindParam(":from_latitude", $from_latitude, PDO::PARAM_INT);
+			$query->bindParam(":to_latitude", $to_latitude, PDO::PARAM_INT);
+			$query->bindParam(":from_longitude", $from_longitude, PDO::PARAM_INT);
+			$query->bindParam(":to_longitude", $to_longitude, PDO::PARAM_INT);
+			$query->execute();
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(PDOException $e) 
+		{
+			echo ("Error: " . $e->getMessage());
+		}
+		return NULL;
 	}
 	
 	/**

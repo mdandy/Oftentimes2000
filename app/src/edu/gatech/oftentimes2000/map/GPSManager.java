@@ -19,8 +19,8 @@ public class GPSManager
 		Location location = locationManager.getLastKnownLocation(provider);
 		if (location != null)
 		{	
-			int latitude = (int) location.getLatitude() * 1000000;
-			int longitude = (int) location.getLongitude() * 1000000;
+			int latitude = (int) (location.getLatitude() * 1000000);
+			int longitude = (int) (location.getLongitude() * 1000000);
 			return new GeoPoint(latitude, longitude);
 		}
 		return new GeoPoint(0, 0);

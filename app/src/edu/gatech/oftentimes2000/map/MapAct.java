@@ -1,6 +1,7 @@
 package edu.gatech.oftentimes2000.map;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +11,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
 import com.google.android.maps.OverlayItem;
 
 import edu.gatech.oftentimes2000.R;
@@ -22,16 +21,15 @@ import edu.gatech.oftentimes2000.data.Announcement;
 
 public class MapAct extends MapActivity implements LocationListener {
 
-
 	private MyMapView mapView;
 	private LocationManager locManager;
 	private Parcelable[] temp;
 	private ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 	private Announcement announcement;
-	
-	private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>(); 
+	private Hashtable<OverlayItem, Announcement> itemMap = new Hashtable<OverlayItem, Announcement>();
+
+	private ArrayList<OverlayItem> overlayItems = new ArrayList<OverlayItem>();
 	private GeoPoint announcePoint;
-	
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -46,65 +44,51 @@ public class MapAct extends MapActivity implements LocationListener {
 		boolean arrFlag = intent.getBooleanExtra("arr", false);
 		if (arrFlag) { // sending array of announcements
 			this.temp = intent.getParcelableArrayExtra("announcement");
-			
-			for (Parcelable addr: temp) {
+
+			for (Parcelable addr : temp) {
 				announcements.add((Announcement) addr);
 			}
-			
-			for (Announcement a: announcements) {	
-				 GeoPoint point = a.address.geopoint;
-				 overlayItems.add(new OverlayItem(point,  a.title, a.highlights));
+
+			for (Announcement a : announcements) {
+				GeoPoint point = a.address.geopoint;
+				OverlayItem item = new OverlayItem(point, a.title, a.highlights);
+				itemMap.put(item, a);
+				overlayItems.add(item);
 			}
-		}
-		else {
+		} else {
 			this.announcement = intent.getParcelableExtra("announcement");
 			announcePoint = announcement.address.geopoint;
-			overlayItems.add(new OverlayItem(announcePoint, announcement.title, announcement.highlights));
+			OverlayItem item = new OverlayItem(announcePoint,
+					announcement.title, announcement.highlights);
+			overlayItems.add(item);
+			itemMap.put(item, announcement);
 		}
 
-		
 		setContentView(R.layout.map);
 		mapView = (MyMapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-	
-		//MapController controller = mapView.getController();
+
+		// MapController controller = mapView.getController();
 		// invalidate the map in order to show changes
 		mapView.invalidate();
 		// Use the location manager through GPS
 		locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-				0, this);
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				this);
 
-		//get the current location (last known location) from the location manager
-		Location location = locManager
-				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-		//if location found display as a toast the current latitude and longitude
-		if (location != null) {
-
-			//controller.animateTo(point);
-
-			//controller.setZoom(15);
-
-//			Toast.makeText(
-//					this,
-//					"Current location:\nLatitude: " + location.getLatitude()
-//					+ "\n" + "Longitude: " + location.getLongitude(),
-//					Toast.LENGTH_LONG).show();
-		} else {
-
-//			Toast.makeText(this, "Cannot fetch current location!",
-//					Toast.LENGTH_LONG).show();
-		}
+		// get the current location (last known location) from the location
+		// manager
+		// Location location = locManager
+		// .getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 		// fetch the drawable - the pin that will be displayed on the map
-		Drawable drawable = this.getResources().getDrawable(R.drawable.ic_map_pin);
-		
+		Drawable drawable = this.getResources().getDrawable(
+				R.drawable.ic_map_pin);
 
-		HelloItemizedOverlay itemizedOverlay = new HelloItemizedOverlay(drawable,this);
-		itemizedOverlay = new HelloItemizedOverlay(drawable,this);
+		HelloItemizedOverlay itemizedOverlay = new HelloItemizedOverlay(
+				drawable, this, itemMap);
 
-		for (OverlayItem item: overlayItems) {
+		for (OverlayItem item : overlayItems) {
 			itemizedOverlay.addOverlay(item);
 		}
 
@@ -113,7 +97,8 @@ public class MapAct extends MapActivity implements LocationListener {
 
 		mapView.invalidate();
 
-		//when the current location is found – stop listening for updates (preserves battery)
+		// when the current location is found – stop listening for updates
+		// (preserves battery)
 		locManager.removeUpdates(this);
 	}
 
@@ -138,13 +123,14 @@ public class MapAct extends MapActivity implements LocationListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-				0, this);
+		locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		locManager.removeUpdates(this); //activity pauses => stop listening for updates
+		locManager.removeUpdates(this); // activity pauses => stop listening for
+										// updates
 	}
 }
