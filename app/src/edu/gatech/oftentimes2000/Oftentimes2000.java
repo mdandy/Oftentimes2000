@@ -4,21 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.darvds.ribbonmenu.RibbonMenuView;
@@ -108,9 +104,8 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnI
 				startActivity(category_intent);
 				break;
 			case R.id.ribbon_menu_map:
-				//TODO: Kevin call maps with announcements
-//				announcements[0].address.geopoint;
 				Intent intent = new Intent (this, MapAct.class);
+				intent.putExtra("arr", true);
 				intent.putExtra("announcement", announcements);
 				startActivity(intent);
 				

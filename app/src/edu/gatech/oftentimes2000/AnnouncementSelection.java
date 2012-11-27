@@ -84,7 +84,6 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 	{
 		switch (v.getId())
 		{
-		//TODO: Call Maps Kevin
 			case R.id.bMapIt: 
 				Intent intent = new Intent (this, MapAct.class);
 				intent.putExtra("arr", true);
@@ -144,7 +143,6 @@ public class AnnouncementSelection extends Activity implements OnItemClickListen
 		@Override
 		protected Announcement[] doInBackground(String... params) 
 		{
-			// TODO Auto-generated method stub
 			String category = params[0];
 			Announcement[] announcements = contentManager.getAnnouncemetsByType(category);
 			return announcements;
