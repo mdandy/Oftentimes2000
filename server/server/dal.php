@@ -178,13 +178,15 @@ class DAL
 			$query->bindParam(":to", $to);
 			$query->bindParam(":url", $url, PDO::PARAM_STR, 64);
 			$query->bindParam(":category", $category, PDO::PARAM_STR, 64);
-			return $query->execute();
+			$query->execute();
+			
+			return self::$dbh->lastInsertId();
 		}
 		catch(PDOException $e) 
 		{
-			//echo ("Error: " . $e->getMessage());
+			echo ("Error: " . $e->getMessage());
 		}
-		return false;
+		return -1;
 	}
 	
 	public static function update_announcement($id, $username, $title, $type, $highlights, $fine_print="", 
@@ -223,13 +225,17 @@ class DAL
 			$query->bindParam(":u_to", $to);
 			$query->bindParam(":u_url", $url, PDO::PARAM_STR, 64);
 			$query->bindParam(":u_category", $category, PDO::PARAM_STR, 64);
-			return $query->execute();
+			$success = $query->execute();
+			
+			if ($success)
+				return $id;
+			return -1;
 		}
 		catch(PDOException $e) 
 		{
 			//echo ("Error: " . $e->getMessage());
 		}
-		return false;
+		return -1;
 	}
 	
 	public static function delete_announcement($id)
@@ -430,7 +436,7 @@ class DAL
 		}
 		catch(PDOException $e) 
 		{
-			//echo ("Error: " . $e->getMessage());
+			echo ("Error: " . $e->getMessage());
 		}
 		return NULL;
 	}
