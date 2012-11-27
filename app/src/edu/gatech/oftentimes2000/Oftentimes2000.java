@@ -98,9 +98,9 @@ public class Oftentimes2000 extends Activity implements iRibbonMenuCallback, OnI
 					Toast.makeText(appContext, "You have to enable GCM first.", Toast.LENGTH_SHORT).show();
 				else
 				{
-					
+					Intent subIntent = new Intent (this, Subscription.class);
+					startActivity(subIntent);
 				}
-				
 				break;
 			case R.id.ribbon_menu_categories:
 				Intent category_intent = new Intent (this, CategorySelection.class);
