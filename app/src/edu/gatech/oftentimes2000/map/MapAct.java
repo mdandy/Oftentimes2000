@@ -14,6 +14,7 @@ import android.os.Parcelable;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
 import com.google.android.maps.OverlayItem;
 
 import edu.gatech.oftentimes2000.R;
@@ -67,8 +68,8 @@ public class MapAct extends MapActivity implements LocationListener {
 		setContentView(R.layout.map);
 		mapView = (MyMapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
-
-		// MapController controller = mapView.getController();
+//		MapController controller = mapView.getController();
+//		controller.setZoom(15);
 		// invalidate the map in order to show changes
 		mapView.invalidate();
 		// Use the location manager through GPS
@@ -112,8 +113,6 @@ public class MapAct extends MapActivity implements LocationListener {
 
 	@Override
 	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
